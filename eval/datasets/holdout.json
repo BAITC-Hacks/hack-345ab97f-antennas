@@ -1,0 +1,63 @@
+[
+  {
+    "id": "t12",
+    "type": "boundary",
+    "lang": "ru",
+    "text": "Полис везите не домой, а на работу, на Кабанбай батыра 20",
+    "expected": "change_delivery_address"
+  },
+  {
+    "id": "t06",
+    "type": "simple",
+    "lang": "kk",
+    "text": "Телефон нөмірім ауысты, жаңасын жазып қойыңызшы",
+    "expected": "change_personal_data"
+  },
+  {
+    "id": "t04",
+    "type": "simple",
+    "lang": "kk",
+    "text": "Өтініш бергеніме екі апта болды, төлем әлі түскен жоқ",
+    "expected": "claim_status"
+  },
+  {
+    "id": "t21",
+    "type": "topic_switch",
+    "lang": "kk",
+    "text": "Тоқтаңыз, алдымен төлем туралы сұрайын: кеше ақша төледім, бірақ полис келген жоқ",
+    "context": {
+      "active_scenario": "renew_policy",
+      "last_assistant_message": "Полис нөмірін айтыңызшы.",
+      "topic_stack": []
+    },
+    "expected": "payment_issue"
+  },
+  {
+    "id": "t09",
+    "type": "boundary",
+    "lang": "ru",
+    "text": "До какого числа действует моя страховка? Хочу понять, когда продлевать",
+    "expected": "policy_status"
+  },
+  {
+    "id": "t08",
+    "type": "boundary",
+    "lang": "ru",
+    "text": "Полис так и не активировали, верните мне деньги, больше не хочу с вами работать",
+    "expected": "refund_request"
+  },
+  {
+    "id": "t10",
+    "type": "boundary",
+    "lang": "ru",
+    "text": "Полис заканчивается на следующей неделе, давайте сразу продлим на год",
+    "expected": "renew_policy"
+  },
+  {
+    "id": "t16",
+    "type": "mixed",
+    "lang": "mixed",
+    "text": "Жолда авария болды, что мне теперь делать?",
+    "expected": "report_claim"
+  }
+]

@@ -1,0 +1,1127 @@
+{
+  "dataset": "tune",
+  "model": "gpt-4.1-mini",
+  "metric_version": 2,
+  "source_sha256": {
+    "eval/datasets/tune.json": "acc26e7fa0b46cce908a6bc7570b24a7b281374593865fafece2d53cd4e4f46f",
+    "eval/metrics.py": "62957ebc5f18f14d17577b1be6bd7a4fa914af007f63d8f6a17566a5a4a30d62",
+    "eval/run_eval.py": "a3acf14aec63313b2c4ca633fcb75b89d35f8a272f54c6ca6b8fc742fa34c98d",
+    "data/scenarios.json": "dee6562722e224f9f86128a9977efd70bc861b67dd6fd5cf1230c34d5625d457",
+    "backend/app/router/__init__.py": "56e84e1b8b99c7e537dd720e6ed52124e0f53f9b1e49b7d963f86709470a279f",
+    "backend/app/router/catalog.py": "b0f088e540ad364fce4c48250696b9174f1852ad13bc84ffd75c4de6d6053f07",
+    "backend/app/router/cli.py": "7f7291b6f7316e454fd350dfe51c867a36e6bfe9349e311f9444911afee35531",
+    "backend/app/router/confidence.py": "386be6175fcce199812c466887f7eee8f44a3631740a732fe17b9629722dae3e",
+    "backend/app/router/llm_router.py": "b98adadef580169da74055eed2aa65e2bab040e1c8a7044086016487236edce4",
+    "backend/app/router/policy.py": "cb608a916c6d3d3df94d7dc6f53a459e3657c010380efd18aa1ca7026da01681",
+    "backend/app/router/prompt.py": "6cda46b9b69cac8b35aac9c8785e18b66e43828847adde39f4f0c7071886eb6e",
+    "backend/app/router/providers/__init__.py": "ccf01856115f92eb94c125dfb620cba07ad31c38b3c3cdffdca54e12d4d508f7",
+    "backend/app/router/providers/base.py": "a33be89b46ed38c9c819dfde7faf69b3438c22fad11cd700550108e728deccde",
+    "backend/app/router/providers/fake.py": "53d7a1d43a8e422fe05f103d7ee84c88a351773e1e762adad67cd64d11c127b5",
+    "backend/app/router/providers/openai_provider.py": "7fd05b95568a05e193ffbdc256f666bd74719e699e349297bce1f8ae2ceca427",
+    "backend/app/router/schema.py": "a6f7db34d834702436cea293989d028819b0124ca8c2d96dacdc1d54c6717375"
+  },
+  "config": {
+    "temperature": 0,
+    "structured_output": true,
+    "logprobs": true,
+    "route_threshold": 0.75,
+    "margin_threshold": 0.2,
+    "handoff_threshold": 0.45
+  },
+  "packages": {
+    "openai": "3.19.0",
+    "pydantic": "2.13.5"
+  },
+  "python": "3.13.14",
+  "run": 2,
+  "complete": true,
+  "created_at": "2026-09-23T11:07:08.530954+00:00",
+  "accuracy": 0.875,
+  "scenario_accuracy": 0.875,
+  "decision_accuracy": 0.8125,
+  "joint_accuracy": 0.8125,
+  "metrics": {
+    "top1": {
+      "correct": 14,
+      "total": 16,
+      "accuracy": 0.875
+    },
+    "decision": {
+      "correct": 13,
+      "total": 16,
+      "accuracy": 0.8125
+    },
+    "action": {
+      "correct": 13,
+      "total": 16,
+      "accuracy": 0.8125
+    },
+    "topic_switch": {
+      "correct": 0,
+      "total": 0,
+      "accuracy": null
+    },
+    "joint": {
+      "correct": 13,
+      "total": 16,
+      "accuracy": 0.8125
+    },
+    "additional_intents": {
+      "correct": 1,
+      "total": 1,
+      "accuracy": 1.0
+    },
+    "errors": 0
+  },
+  "by_type": {
+    "boundary": {
+      "top1": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "decision": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "action": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "additional_intents": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "errors": 0
+    },
+    "clarify": {
+      "top1": {
+        "correct": 0,
+        "total": 1,
+        "accuracy": 0.0
+      },
+      "decision": {
+        "correct": 0,
+        "total": 1,
+        "accuracy": 0.0
+      },
+      "action": {
+        "correct": 0,
+        "total": 1,
+        "accuracy": 0.0
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 0,
+        "total": 1,
+        "accuracy": 0.0
+      },
+      "additional_intents": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "errors": 0
+    },
+    "handoff": {
+      "top1": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "decision": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "action": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "additional_intents": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "errors": 0
+    },
+    "mixed": {
+      "top1": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "decision": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "action": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "additional_intents": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "errors": 0
+    },
+    "multi": {
+      "top1": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "decision": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "action": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "additional_intents": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "errors": 0
+    },
+    "simple": {
+      "top1": {
+        "correct": 4,
+        "total": 4,
+        "accuracy": 1.0
+      },
+      "decision": {
+        "correct": 4,
+        "total": 4,
+        "accuracy": 1.0
+      },
+      "action": {
+        "correct": 4,
+        "total": 4,
+        "accuracy": 1.0
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 4,
+        "total": 4,
+        "accuracy": 1.0
+      },
+      "additional_intents": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "errors": 0
+    },
+    "topic_switch": {
+      "top1": {
+        "correct": 2,
+        "total": 3,
+        "accuracy": 0.6666666666666666
+      },
+      "decision": {
+        "correct": 1,
+        "total": 3,
+        "accuracy": 0.3333333333333333
+      },
+      "action": {
+        "correct": 1,
+        "total": 3,
+        "accuracy": 0.3333333333333333
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 1,
+        "total": 3,
+        "accuracy": 0.3333333333333333
+      },
+      "additional_intents": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "errors": 0
+    }
+  },
+  "by_lang": {
+    "kk": {
+      "top1": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 1.0
+      },
+      "decision": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 1.0
+      },
+      "action": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 1.0
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 1.0
+      },
+      "additional_intents": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "errors": 0
+    },
+    "mixed": {
+      "top1": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "decision": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "action": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "additional_intents": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "errors": 0
+    },
+    "ru": {
+      "top1": {
+        "correct": 9,
+        "total": 11,
+        "accuracy": 0.8181818181818182
+      },
+      "decision": {
+        "correct": 8,
+        "total": 11,
+        "accuracy": 0.7272727272727273
+      },
+      "action": {
+        "correct": 8,
+        "total": 11,
+        "accuracy": 0.7272727272727273
+      },
+      "topic_switch": {
+        "correct": 0,
+        "total": 0,
+        "accuracy": null
+      },
+      "joint": {
+        "correct": 8,
+        "total": 11,
+        "accuracy": 0.7272727272727273
+      },
+      "additional_intents": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "errors": 0
+    }
+  },
+  "multi_intent_found": "1/1",
+  "latency_p50_ms": 1360.763,
+  "latency_p95_ms": 1606.101,
+  "commit_p50_ms": 838.325,
+  "top_confusions": [
+    {
+      "expected": null,
+      "actual": "payment_issue",
+      "count": 1
+    },
+    {
+      "expected": "policy_status",
+      "actual": "report_claim",
+      "count": 1
+    }
+  ],
+  "results": [
+    {
+      "id": "t05",
+      "text": "Жену надо вписать в страховку, она тоже будет ездить",
+      "type": "simple",
+      "lang": "ru",
+      "expected": "add_driver",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "add_driver",
+        "decision": "route",
+        "alternatives": [
+          {
+            "scenario_id": "change_personal_data",
+            "why_not": "Client wants to add a driver, not change own data"
+          }
+        ],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "driver_relation",
+            "value": "жена"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client requests to add wife as driver to insurance"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 743.913,
+        "full": 1606.101
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t01",
+      "text": "Добрый день, хочу застраховать машину, сколько это будет стоить?",
+      "type": "simple",
+      "lang": "ru",
+      "expected": "buy_policy",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "buy_policy",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "insurance_object",
+            "value": "машина"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client wants to buy car insurance policy"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 816.151,
+        "full": 1301.77
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t20",
+      "text": "Астана, Туран 55, квартира 12",
+      "type": "topic_switch",
+      "lang": "ru",
+      "expected": "change_delivery_address",
+      "expected_decision": "continue",
+      "context": {
+        "active_scenario": "change_delivery_address",
+        "last_assistant_message": "Назовите новый адрес доставки.",
+        "topic_stack": []
+      },
+      "decision": {
+        "scenario_id": "change_delivery_address",
+        "decision": "continue",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "new_address",
+            "value": "Астана, Туран 55, квартира 12"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент отвечает на вопрос по изменению адреса доставки"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "continue",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 784.14,
+        "full": 1360.763
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t11",
+      "text": "Я переехал, поменяйте адрес регистрации в договоре",
+      "type": "boundary",
+      "lang": "ru",
+      "expected": "change_personal_data",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "change_personal_data",
+        "decision": "route",
+        "alternatives": [
+          {
+            "scenario_id": "change_delivery_address",
+            "why_not": "Клиент говорит об адресе регистрации, не о доставке"
+          }
+        ],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "address_registration",
+            "value": "новый адрес"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент хочет изменить адрес регистрации в договоре"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 901.274,
+        "full": 1576.655
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t13",
+      "text": "Попал в ДТП в прошлом месяце, документы сдал, когда деньги?",
+      "type": "boundary",
+      "lang": "ru",
+      "expected": "claim_status",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "claim_status",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client asks about payment status for already reported accident claim"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 838.325,
+        "full": 1152.876
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t23",
+      "text": "У меня проблема со страховкой",
+      "type": "clarify",
+      "lang": "ru",
+      "expected": null,
+      "expected_decision": "clarify",
+      "decision": {
+        "scenario_id": "payment_issue",
+        "decision": "route",
+        "alternatives": [
+          {
+            "scenario_id": "refund_request",
+            "why_not": "No explicit request for refund or contract termination"
+          }
+        ],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client reports a problem with insurance, likely payment or activation issue"
+      },
+      "confidence": 0.9543,
+      "margin": 0.9253,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 950.986,
+        "full": 1512.164
+      },
+      "correct": false,
+      "scenario_correct": false,
+      "decision_correct": false,
+      "action_correct": false,
+      "topic_switch_correct": null,
+      "joint_correct": false,
+      "additional_correct": null
+    },
+    {
+      "id": "t24",
+      "text": "Операторға қосыңызшы, тірі адаммен сөйлескім келеді",
+      "type": "handoff",
+      "lang": "kk",
+      "expected": null,
+      "expected_decision": "handoff",
+      "decision": {
+        "scenario_id": null,
+        "decision": "handoff",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "kk",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client requests to talk to a human operator"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "handoff",
+      "clarify_question": null,
+      "handoff_card": {
+        "summary": "Операторға қосыңызшы, тірі адаммен сөйлескім келеді",
+        "candidates": [],
+        "slots": [],
+        "attempts": 0,
+        "reason": "Client requests to talk to a human operator",
+        "language": "kk",
+        "emotion": "neutral"
+      },
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 1088.348,
+        "full": 1435.703
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t14",
+      "text": "Сәлеметсіз бе, я вчера оплатил, ақша шешілді, а полис всё ещё не активен",
+      "type": "mixed",
+      "lang": "mixed",
+      "expected": "payment_issue",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "payment_issue",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "mixed",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client paid but policy is not active"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 877.969,
+        "full": 1110.428
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t18",
+      "text": "Здравствуйте, я вчера оплатил, деньги списались, а полис не подтвердился… а, и ещё, адрес доставки поменять надо",
+      "type": "multi",
+      "lang": "ru",
+      "expected": "payment_issue",
+      "expected_decision": "route",
+      "expected_additional": [
+        "change_delivery_address"
+      ],
+      "decision": {
+        "scenario_id": "payment_issue",
+        "decision": "route",
+        "alternatives": [
+          {
+            "scenario_id": "change_delivery_address",
+            "why_not": "Second request about address change"
+          },
+          {
+            "scenario_id": "refund_request",
+            "why_not": "No explicit refund or cancellation request"
+          }
+        ],
+        "additional_intents": [
+          {
+            "scenario_id": "change_delivery_address"
+          }
+        ],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client reports payment problem and wants to change delivery address"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 827.312,
+        "full": 1417.641
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": true
+    },
+    {
+      "id": "t07",
+      "text": "Деньги с карты списались, а полис в приложении так и не появился",
+      "type": "boundary",
+      "lang": "ru",
+      "expected": "payment_issue",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "payment_issue",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Оплата прошла, но полис не активирован"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 869.577,
+        "full": 1290.633
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t19",
+      "text": "Подождите, а мой полис вообще ещё действует? Может, он уже закончился",
+      "type": "topic_switch",
+      "lang": "ru",
+      "expected": "policy_status",
+      "expected_decision": "route",
+      "context": {
+        "active_scenario": "report_claim",
+        "last_assistant_message": "Опишите, пожалуйста, что произошло и когда.",
+        "topic_stack": []
+      },
+      "decision": {
+        "scenario_id": "report_claim",
+        "decision": "continue",
+        "alternatives": [
+          {
+            "scenario_id": "policy_status",
+            "why_not": "User asks about policy validity, but active scenario is reporting claim"
+          }
+        ],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "User answers question in active report_claim scenario, asking about policy validity"
+      },
+      "confidence": 0.9959,
+      "margin": 0.9919,
+      "final_action": "continue",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 1235.864,
+        "full": 2156.664
+      },
+      "correct": false,
+      "scenario_correct": false,
+      "decision_correct": false,
+      "action_correct": false,
+      "topic_switch_correct": null,
+      "joint_correct": false,
+      "additional_correct": null
+    },
+    {
+      "id": "t02",
+      "text": "Сәлеметсіз бе, сақтандыруым бітіп қалған жоқ па, тексере аласыз ба?",
+      "type": "simple",
+      "lang": "kk",
+      "expected": "policy_status",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "policy_status",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "kk",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client asks to check if insurance is expired"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 688.392,
+        "full": 1296.698
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t17",
+      "text": "Страховканы бұзғым келеді, деньги вернёте?",
+      "type": "mixed",
+      "lang": "mixed",
+      "expected": "refund_request",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "refund_request",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "mixed",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client wants to cancel insurance and get money back"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 745.241,
+        "full": 1124.636
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t22",
+      "text": "Да, давайте вернёмся к продлению",
+      "type": "topic_switch",
+      "lang": "ru",
+      "expected": "renew_policy",
+      "expected_decision": "route",
+      "context": {
+        "active_scenario": "payment_issue",
+        "last_assistant_message": "Платёж найден, полис активирован. Могу ещё чем-то помочь?",
+        "topic_stack": [
+          "renew_policy"
+        ]
+      },
+      "decision": {
+        "scenario_id": "renew_policy",
+        "decision": "continue",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": true,
+        "emotion": "neutral",
+        "reason": "Client wants to return to policy renewal scenario"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "continue",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 781.131,
+        "full": 1090.489
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": false,
+      "action_correct": false,
+      "topic_switch_correct": null,
+      "joint_correct": false,
+      "additional_correct": null
+    },
+    {
+      "id": "t15",
+      "text": "Полисімді продлить етейін деп едім, номері есімде жоқ",
+      "type": "mixed",
+      "lang": "mixed",
+      "expected": "renew_policy",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "renew_policy",
+        "decision": "route",
+        "alternatives": [
+          {
+            "scenario_id": "policy_status",
+            "why_not": "Client wants to renew, not just check status"
+          }
+        ],
+        "additional_intents": [],
+        "slots": [],
+        "language": "mixed",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Client wants to renew policy but lacks policy number"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 745.147,
+        "full": 1198.766
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    },
+    {
+      "id": "t03",
+      "text": "Вчера соседи сверху залили, вся кухня мокрая",
+      "type": "simple",
+      "lang": "ru",
+      "expected": "report_claim",
+      "expected_decision": "route",
+      "decision": {
+        "scenario_id": "report_claim",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "claim_type",
+            "value": "затопление"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент сообщает о страховом случае затопления квартиры"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.1",
+      "timings_ms": {
+        "commit": 853.253,
+        "full": 1419.17
+      },
+      "correct": true,
+      "scenario_correct": true,
+      "decision_correct": true,
+      "action_correct": true,
+      "topic_switch_correct": null,
+      "joint_correct": true,
+      "additional_correct": null
+    }
+  ]
+}

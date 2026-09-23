@@ -1,0 +1,137 @@
+[
+  {
+    "id": "t05",
+    "type": "simple",
+    "lang": "ru",
+    "text": "Жену надо вписать в страховку, она тоже будет ездить",
+    "expected": "add_driver"
+  },
+  {
+    "id": "t01",
+    "type": "simple",
+    "lang": "ru",
+    "text": "Добрый день, хочу застраховать машину, сколько это будет стоить?",
+    "expected": "buy_policy"
+  },
+  {
+    "id": "t20",
+    "type": "topic_switch",
+    "lang": "ru",
+    "text": "Астана, Туран 55, квартира 12",
+    "context": {
+      "active_scenario": "change_delivery_address",
+      "last_assistant_message": "Назовите новый адрес доставки.",
+      "topic_stack": []
+    },
+    "expected": "change_delivery_address",
+    "expected_decision": "continue"
+  },
+  {
+    "id": "t11",
+    "type": "boundary",
+    "lang": "ru",
+    "text": "Я переехал, поменяйте адрес регистрации в договоре",
+    "expected": "change_personal_data"
+  },
+  {
+    "id": "t13",
+    "type": "boundary",
+    "lang": "ru",
+    "text": "Попал в ДТП в прошлом месяце, документы сдал, когда деньги?",
+    "expected": "claim_status"
+  },
+  {
+    "id": "t23",
+    "type": "clarify",
+    "lang": "ru",
+    "text": "У меня проблема со страховкой",
+    "expected": null,
+    "expected_decision": "clarify"
+  },
+  {
+    "id": "t24",
+    "type": "handoff",
+    "lang": "kk",
+    "text": "Операторға қосыңызшы, тірі адаммен сөйлескім келеді",
+    "expected": null,
+    "expected_decision": "handoff"
+  },
+  {
+    "id": "t14",
+    "type": "mixed",
+    "lang": "mixed",
+    "text": "Сәлеметсіз бе, я вчера оплатил, ақша шешілді, а полис всё ещё не активен",
+    "expected": "payment_issue"
+  },
+  {
+    "id": "t18",
+    "type": "multi",
+    "lang": "ru",
+    "text": "Здравствуйте, я вчера оплатил, деньги списались, а полис не подтвердился… а, и ещё, адрес доставки поменять надо",
+    "expected": "payment_issue",
+    "expected_additional": [
+      "change_delivery_address"
+    ]
+  },
+  {
+    "id": "t07",
+    "type": "boundary",
+    "lang": "ru",
+    "text": "Деньги с карты списались, а полис в приложении так и не появился",
+    "expected": "payment_issue"
+  },
+  {
+    "id": "t19",
+    "type": "topic_switch",
+    "lang": "ru",
+    "text": "Подождите, а мой полис вообще ещё действует? Может, он уже закончился",
+    "context": {
+      "active_scenario": "report_claim",
+      "last_assistant_message": "Опишите, пожалуйста, что произошло и когда.",
+      "topic_stack": []
+    },
+    "expected": "policy_status"
+  },
+  {
+    "id": "t02",
+    "type": "simple",
+    "lang": "kk",
+    "text": "Сәлеметсіз бе, сақтандыруым бітіп қалған жоқ па, тексере аласыз ба?",
+    "expected": "policy_status"
+  },
+  {
+    "id": "t17",
+    "type": "mixed",
+    "lang": "mixed",
+    "text": "Страховканы бұзғым келеді, деньги вернёте?",
+    "expected": "refund_request"
+  },
+  {
+    "id": "t22",
+    "type": "topic_switch",
+    "lang": "ru",
+    "text": "Да, давайте вернёмся к продлению",
+    "context": {
+      "active_scenario": "payment_issue",
+      "last_assistant_message": "Платёж найден, полис активирован. Могу ещё чем-то помочь?",
+      "topic_stack": [
+        "renew_policy"
+      ]
+    },
+    "expected": "renew_policy"
+  },
+  {
+    "id": "t15",
+    "type": "mixed",
+    "lang": "mixed",
+    "text": "Полисімді продлить етейін деп едім, номері есімде жоқ",
+    "expected": "renew_policy"
+  },
+  {
+    "id": "t03",
+    "type": "simple",
+    "lang": "ru",
+    "text": "Вчера соседи сверху залили, вся кухня мокрая",
+    "expected": "report_claim"
+  }
+]
