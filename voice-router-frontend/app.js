@@ -12,6 +12,33 @@ const gatewayUrl = parseGatewayUrl();
 let selected = null, callActive = false, mediaStream = null, audioContext = null, quietTimer = null, turnCounter = 46, pendingTurn = null;
 let requestController = null, editingId = null, showAllRoutes = false, toastTimer;
 const history = new Map();
+let gatewayBusy = false, voiceEnabled = null, backendMode = null, audioUrl = null;
+const gatewayFeatures = new Set();
+const responseAudio = document.createElement("audio");
+responseAudio.controls = true; responseAudio.hidden = true; responseAudio.style.width = "100%";
+responseAudio.setAttribute("aria-label", "Ответ помощника, голос синтезирован ИИ");
+const voiceNotice = document.createElement("p");
+voiceNotice.className = "muted"; voiceNotice.textContent = "Голос синтезирован ИИ, это не человек."; voiceNotice.hidden = true;
+$(".turn-card").append(responseAudio, voiceNotice);
+function stopPlayback() {
+  responseAudio.pause(); responseAudio.removeAttribute("src"); responseAudio.load();
+  if (audioUrl) URL.revokeObjectURL(audioUrl);
+  audioUrl = null; responseAudio.hidden = true;
+}
+function playAudio(event) {
+  if (typeof event.chunk !== "string" || event.chunk.length > 3 * 1024 * 1024 || !["audio/mpeg", "audio/wav"].includes(event.mime_type)) return;
+  try {
+    stopPlayback();
+    const binary = atob(event.chunk), bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+    audioUrl = URL.createObjectURL(new Blob([bytes], { type: event.mime_type }));
+    responseAudio.src = audioUrl; responseAudio.hidden = false; voiceNotice.hidden = false;
+    responseAudio.play().catch(() => toast("Нажмите ▶ под ответом, чтобы прослушать голос ИИ."));
+  } catch { toast("Не удалось воспроизвести аудио."); }
+}
+function setGatewayBusy(value) {
+  gatewayBusy = value;
+  $("#text-input-form button").disabled = value;
+}
 for (const [name, turn] of Object.entries(demos)) {
   turn.path = "demo";
   turn.source = "demo";
@@ -37,7 +64,7 @@ function setGatewayStatus({ mode, text }) {
   const indicator = $("#gateway-status");
   indicator.className = `pill ${mode === "online" ? "live" : ""}`;
   indicator.textContent = text;
-  if (mode === "offline" && callActive) stopMicrophone();
+  if (mode === "offline") { setGatewayBusy(false); stopPlayback(); if (callActive) stopMicrophone(); }
 }
 function fmt(milliseconds) { return `${String(Math.round(milliseconds)).padStart(3, "0")} ms`; }
 function totalOf(timings = []) { return timings.reduce((sum, [, value]) => sum + Number(value || 0), 0); }
@@ -45,7 +72,17 @@ function escapeHtml(value) { return String(value ?? "").replace(/[&<>'"]/g, (cha
 function toast(message) { const node = $("#toast"); node.textContent = message; node.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => node.classList.remove("show"), 4000); }
 
 function showTurn(turn) { selected = turn; $("#turn-id").textContent = turn.turn; $("#client-text").textContent = turn.text || "Реплика получена"; $("#bot-text").textContent = turn.response || "Роутер обрабатывает запрос."; $("#route-name").textContent = turn.label || turn.scenario || "ожидание решения"; $("#route-confidence").textContent = Number.isFinite(turn.confidence) ? `${Math.round(turn.confidence * 100)}% · ${turn.decision}` : "маршрут ожидается"; renderTrace(turn); appendRoute(turn); }
-function useDemo(name) { cancelRequest(); stopMicrophone(); pendingTurn = null; showTurn(demos[name]); window.location.hash = "call"; toast("Демо: заранее подготовленный результат, без вызова модели"); }
+function useDemo(name) {
+  if (gatewayUrl && gatewayFeatures.has("supervisor_stats")) {
+    if (gatewayBusy) { toast("Дождитесь ответа на предыдущую реплику."); return; }
+    if (gateway.socket?.readyState !== 1) { toast("Gateway не подключён."); return; }
+    stopPlayback(); beginGatewayTurn(demos[name].text); setGatewayBusy(true);
+    if (!gateway.send({ type: "text_input", text: demos[name].text, client_ts: Date.now() })) setGatewayBusy(false);
+    window.location.hash = "call"; return;
+  }
+  cancelRequest(); stopMicrophone(); stopPlayback(); pendingTurn = null; showTurn(demos[name]);
+  window.location.hash = "call"; toast("Демо: заранее подготовленный результат, без вызова модели");
+}
 document.querySelectorAll(".prompt").forEach((button) => button.addEventListener("click", () => useDemo(button.dataset.demo)));
 
 function renderTrace(turn) {
@@ -93,17 +130,17 @@ function cancelRequest() {
   $("#text-input-form button").disabled = false;
 }
 
-function resetDemo() { cancelRequest(); stopMicrophone(); selected = null; pendingTurn = null; history.clear(); renderHistory(); $("#turn-id").textContent = "#042"; $("#client-text").textContent = "Выберите фразу ниже, чтобы начать."; $("#bot-text").textContent = "Я покажу маршрут, альтернативы и задержку каждого этапа."; $("#route-name").textContent = "ожидание ввода"; $("#route-confidence").textContent = "—"; renderTrace({}); toast("Демо сброшено"); }
+function resetDemo() { if (gatewayBusy) { toast("Дождитесь завершения реплики перед сбросом."); return; } stopPlayback(); cancelRequest(); stopMicrophone(); selected = null; pendingTurn = null; history.clear(); renderHistory(); $("#turn-id").textContent = "#042"; $("#client-text").textContent = "Выберите фразу ниже, чтобы начать."; $("#bot-text").textContent = "Я покажу маршрут, альтернативы и задержку каждого этапа."; $("#route-name").textContent = "ожидание ввода"; $("#route-confidence").textContent = "—"; renderTrace({}); toast("Демо сброшено"); }
 $("#reset-demo").addEventListener("click", resetDemo); $("#replay-trace").addEventListener("click", () => selected ? renderTrace(selected) : toast("Сначала отправьте реплику")); $("#gateway-mode").addEventListener("click", () => toast(gatewayUrl ? `Подключён Gateway: ${gatewayUrl}` : "Для live Gateway откройте ?gateway=ws://localhost:<порт>/ws"));
 
 $("#text-input-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const input = $("#text-input"), text = input.value.trim();
-  if (!text || requestController) return;
+  if (!text || requestController || gatewayBusy) return;
   if (gatewayUrl) {
     if (gateway.socket?.readyState !== 1) { toast("Gateway не подключён. Реплика не отправлена."); return; }
-    beginGatewayTurn(text);
-    gateway.send({ type: "text_input", text, client_ts: Date.now() });
+    stopPlayback(); beginGatewayTurn(text); setGatewayBusy(true);
+    if (!gateway.send({ type: "text_input", text, client_ts: Date.now() })) setGatewayBusy(false);
     input.value = "";
   } else {
     input.value = "";
@@ -114,6 +151,7 @@ $("#text-input-form").addEventListener("submit", async (event) => {
 async function toggleMicrophone() {
   if (callActive) { stopMicrophone(); return; }
   if (!gatewayUrl || gateway.socket?.readyState !== 1) { toast("Для голосового ввода нужен подключённый Gateway. Демо-реплики доступны ниже."); return; }
+  if (voiceEnabled === false) { toast("Backend работает без речи. Настройте OpenAI и VOICE_ENABLED=true."); return; }
   $("#call-button").disabled = true;
   try {
     mediaStream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
@@ -150,7 +188,7 @@ async function streamPcm16(stream) {
   let speaking = false;
   source.connect(processor); processor.connect(audioContext.destination);
   processor.onaudioprocess = (event) => {
-    if (!callActive) return;
+    if (!callActive || gatewayBusy || (!responseAudio.paused && !responseAudio.ended)) { clearTimeout(quietTimer); quietTimer = null; speaking = false; return; }
     const samples = event.inputBuffer.getChannelData(0);
     const rms = Math.sqrt(samples.reduce((sum, sample) => sum + sample * sample, 0) / samples.length);
     if (rms > 0.015) {
@@ -165,7 +203,7 @@ async function streamPcm16(stream) {
     }
   };
 }
-window.addEventListener("pagehide", () => { cancelRequest(); stopMicrophone(); gateway.close(); });
+window.addEventListener("pagehide", () => { cancelRequest(); stopPlayback(); stopMicrophone(); gateway.close(); });
 
 function pcm16Base64(samples) { const bytes = new Uint8Array(samples.length * 2); samples.forEach((sample, index) => { const value = Math.max(-1, Math.min(1, sample)) * 0x7fff; bytes[index * 2] = value & 255; bytes[index * 2 + 1] = (value >> 8) & 255; }); let binary = ""; for (const byte of bytes) binary += String.fromCharCode(byte); return btoa(binary); }
 
@@ -202,13 +240,58 @@ async function callOpenAISmokeTest(text) {
   if (!controller.signal.aborted) showTurn(turn);
 }
 function receiveGatewayEvent(event) {
-  if (event.type === "transport_error") { toast(event.message); return; }
+  if (event.type === "session_open") {
+    backendMode = event.mode; voiceEnabled = Boolean(event.voice_enabled);
+    gatewayFeatures.clear(); (event.capabilities || []).forEach(capability => gatewayFeatures.add(capability));
+    history.clear(); renderHistory();
+    $("#gateway-status").textContent = event.mode === "demo" ? "backend demo · без LLM" : "backend · OpenAI";
+    $(".sidebar-footer").textContent = event.mode === "demo" ? "Backend · демо без LLM" : "Backend · OpenAI";
+    $("#catalog .page-title-row p").textContent = "Серверный каталог: изменения доступны следующему вызову роутера.";
+    $(".catalog-note").textContent = event.mode === "demo" ? "Без ключа проверяются точные примеры ru/kk. Это демонстрация транспорта и каталога, не LLM-классификация." : "LLM выбирает сценарий по текущему серверному каталогу и истории диалога. Банковские операции не выполняются.";
+    voiceNotice.hidden = !voiceEnabled;
+    return;
+  }
+  if (event.type === "catalog_snapshot") {
+    if (!Array.isArray(event.scenarios) || !event.scenarios.length || event.scenarios.length > 100 || !event.scenarios.every(isCatalogItem)) return;
+    catalog = event.scenarios;
+    loadScenario(catalog.some(s => s.id === editingId) ? editingId : catalog[0].id);
+    $("#save-state").textContent = `сервер · v${event.version}`;
+    return;
+  }
+  if (event.type === "catalog_deleted") { toast("Сценарий удалён из серверного каталога."); return; }
+  if (event.type === "supervisor_stats") { renderBackendStats(event); return; }
+  if (event.type === "trace_history") {
+    if (!Array.isArray(event.items)) return;
+    history.clear();
+    for (const item of event.items.slice(0, 50).reverse()) {
+      if (!item.decision || !item.turn_id) continue;
+      const decision = item.decision;
+      history.set(item.turn_id, { turn: item.turn_id, scenario: decision.scenario_id, decision: decision.decision, total: item.timings_ms?.total, source: item.mode, time: new Date(item.created_at).toLocaleTimeString("ru-RU") });
+    }
+    renderHistory(); return;
+  }
+  if (event.type === "handoff_snapshot") { showHandoffs(event.items); return; }
+  if (event.type === "turn_started") {
+    stopPlayback(); setGatewayBusy(true);
+    if (!pendingTurn || pendingTurn.complete) beginGatewayTurn("");
+    pendingTurn.serverTurn = event.turn_id;
+    return;
+  }
+  if (event.type === "transport_error") {
+    if (event.scope !== "tts" && !String(event.scope || "").startsWith("catalog")) {
+      setGatewayBusy(false);
+      if (pendingTurn) { pendingTurn.decision = "error"; pendingTurn.response = event.message; pendingTurn.reason = "Запрос не выполнен."; showTurn(pendingTurn); }
+    }
+    if (String(event.scope || "").startsWith("catalog")) $("#save-state").textContent = "ошибка сервера";
+    toast(event.message); return;
+  }
   if (event.type === "catalog_updated") {
-    if (event.scenario_id === editingId) $("#save-state").textContent = "Gateway подтвердил";
+    if (event.scenario_id === editingId) $("#save-state").textContent = event.version ? `сервер · v${event.version}` : "Gateway подтвердил";
     toast(`Gateway подтвердил сценарий: ${event.scenario_id}`); return;
   }
   if (!["transcript", "route_decision", "response_text", "trace", "tts_audio"].includes(event.type)) return;
   if (event.type === "transcript" && pendingTurn?.complete) pendingTurn = null;
+  if (event.turn_id && pendingTurn?.serverTurn && event.turn_id !== pendingTurn.serverTurn) return;
   if (!pendingTurn) beginGatewayTurn("");
   pendingTurn.historyKey ||= pendingTurn.turn;
   if (event.type === "transcript") {
@@ -226,6 +309,8 @@ function receiveGatewayEvent(event) {
     pendingTurn.alternatives = Array.isArray(event.alternatives) ? event.alternatives : [];
     pendingTurn.additional = renderAdditional(pendingTurn.additional_intents);
     pendingTurn.reason = event.reason; pendingTurn.path = event.path || "gateway";
+    pendingTurn.source = event.source || (event.path === "demo" ? "demo" : "gateway");
+    if (event.language) pendingTurn.lang = event.language;
     pendingTurn.events.push(`Router: ${event.decision} · ${pendingTurn.scenario || "—"}`);
   }
   if (event.type === "response_text" && typeof event.text === "string") {
@@ -236,21 +321,60 @@ function receiveGatewayEvent(event) {
     if (event.turn_id != null) pendingTurn.turn = `#${event.turn_id}`;
     pendingTurn.timings = normalizeTimings(timings);
     pendingTurn.total = Number.isFinite(timings.total) && timings.total >= 0 ? timings.total : totalOf(pendingTurn.timings);
-    pendingTurn.events.push("Trace: длительности этапов получены"); pendingTurn.complete = true;
+    pendingTurn.events.push("Trace: длительности этапов получены"); pendingTurn.complete = true; setGatewayBusy(false);
   }
-  if (event.type === "tts_audio") pendingTurn.events.push("TTS: аудиофрагмент получен; воспроизведение ещё не реализовано");
+  if (event.type === "tts_audio") { pendingTurn.events.push("TTS: ответ получен, голос синтезирован ИИ"); playAudio(event); }
   pendingTurn.events = pendingTurn.events.slice(-30);
   showTurn(pendingTurn);
 }
 function normalizeTimings(timings = {}) { const labels = [["endpoint", "Endpoint"], ["stt", "STT"], ["route", "LLM router"], ["exec", "Scenario executor"], ["first_audio", "First audio"]]; return labels.filter(([key]) => Number.isFinite(timings[key]) && timings[key] >= 0).map(([key, label]) => [label, timings[key]]); }
 function renderAdditional(intents) { const valid = Array.isArray(intents) ? intents.filter(intent => intent && typeof intent.scenario_id === "string") : []; return valid.length ? valid.map((intent) => `${intent.scenario_id} · ${intent.confidence ?? "—"}`).join(", ") : "Нет дополнительного намерения"; }
 
+function isCatalogItem(item) {
+  return item && /^[a-z][a-z0-9_]{2,63}$/.test(item.id) && ["title","purpose","boundary","ru","kk"].every(key => typeof item[key] === "string" && item[key].length <= 4000);
+}
+function renderBackendStats(stats) {
+  $("#supervisor .page-title-row p").textContent = `Backend · ${stats.mode === "demo" ? "демо без LLM" : "OpenAI"} · ${stats.sample_size} решений · последние 500 поворотов`;
+  $("#accuracy-value").textContent = "—";
+  $("#latency-value").textContent = Number.isFinite(stats.routing_p50_ms) ? `${stats.routing_p50_ms} ms` : "—";
+  $("#clarify-value").textContent = `${stats.clarify_rate ?? 0}%`;
+  $("#handoff-value").textContent = `${stats.handoff_rate ?? 0}%`;
+  const notes = document.querySelectorAll("#supervisor .metric-card small");
+  ["Нет размеченного eval-набора", "Измерено на сервере", "По сохранённым решениям", "Локальные карточки, не звонки оператору"].forEach((text,i) => { if (notes[i]) notes[i].textContent = text; });
+  $("#supervisor .trend-card .card-heading span").textContent = "Реплики по языкам";
+  $("#supervisor .trend-card .muted").textContent = "Количество, не accuracy";
+  $("#supervisor .bar-chart").innerHTML = ["ru","kk","mixed","unknown"].map(lang => {
+    const count = Number(stats.languages?.[lang]) || 0;
+    const percent = stats.sample_size ? Math.min(100, 100 * count / stats.sample_size) : 0;
+    return `<div><span>${lang}</span><i><b style="width:${percent}%"></b></i><strong>${count}</strong></div>`;
+  }).join("");
+  $("#supervisor .handoff-card h3").textContent = "Локальная очередь операторов";
+  $("#supervisor .handoff-card .eyebrow").textContent = "Карточки backend";
+  $("#supervisor .handoff-card p").textContent = "Карточки сохраняются на backend. Подключения к реальному контакт-центру нет.";
+  $("#supervisor .handoff-data strong").textContent = "История · язык · причина · альтернативы";
+}
+function showHandoffs(items) {
+  if (!Array.isArray(items)) return;
+  document.querySelector("#handoff-dialog")?.remove();
+  const dialog = document.createElement("dialog"); dialog.id = "handoff-dialog";
+  dialog.style.cssText = "background:#0c2233;color:#e9f3f8;border:1px solid #345566;border-radius:16px;padding:24px;max-width:720px;width:90%;max-height:80vh";
+  const close = document.createElement("button"); close.textContent = "Закрыть"; close.className = "outline-button"; close.onclick = () => dialog.close();
+  const title = document.createElement("h2"); title.textContent = "Локальные карточки операторов";
+  dialog.append(close, title);
+  for (const item of items.slice(0, 50)) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = `${item.created_at} · ${item.status} · ${item.mode}\n${item.text}\n${item.reason}`;
+    paragraph.style.whiteSpace = "pre-wrap"; dialog.append(paragraph);
+  }
+  if (!items.length) { const p = document.createElement("p"); p.textContent = "Очередь пуста."; dialog.append(p); }
+  document.body.append(dialog); dialog.showModal();
+}
 function loadCatalog() { try { const saved = JSON.parse(localStorage.getItem("tynda.catalog")); if (Array.isArray(saved) && saved.length && saved.length <= 100 && new Set(saved.map(item => item?.id)).size === saved.length && saved.every(item => item && /^[a-z][a-z0-9_]{2,63}$/.test(item.id) && ["title", "purpose", "boundary", "ru", "kk"].every(key => typeof item[key] === "string" && item[key].length <= 4000))) return saved; } catch { /* use seed */ } return [{ id: "payment_not_confirmed", title: "Проблема с подтверждением оплаты", purpose: "Деньги списались, но заказ или полис не подтвердился.", boundary: "Не выбирать, если клиент просит вернуть деньги: тогда refund_request.", ru: "Деньги списали, а заказ не появился", kk: "Төлем жасадым, бірақ расталмады" }, { id: "payment_failed", title: "Не прошла оплата", purpose: "Оплата не завершилась, списания нет или банк отклонил операцию.", boundary: "Если деньги уже списаны, выбрать payment_not_confirmed.", ru: "Не могу оплатить полис", kk: "Төлем неге өтпеді?" }, { id: "policy_renewal", title: "Продление полиса", purpose: "Клиент хочет продлить действующий страховой полис.", boundary: "Новый полис оформляется через new_policy.", ru: "Продлите мой полис", kk: "Полисімді ұзартқым келеді" }, { id: "refund_request", title: "Запрос на возврат", purpose: "Клиент просит вернуть деньги за проведённую операцию.", boundary: "Отмена ещё не завершённой оплаты относится к payment_cancel.", ru: "Верните деньги", kk: "Ақшамды қайтарыңыз" }]; }
 function saveCatalog() { try { localStorage.setItem("tynda.catalog", JSON.stringify(catalog)); return true; } catch { toast("Хранилище недоступно: изменения останутся только до перезагрузки."); return false; } }
 function renderCatalog(filter = "") { const items = catalog.filter((item) => (item.title + item.id).toLowerCase().includes(filter.toLowerCase())); $("#scenario-list").innerHTML = items.map((item) => `<button type="button" class="scenario-item ${item.id === $("#scenario-id").value ? "selected" : ""}" data-id="${escapeHtml(item.id)}"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.id)}</span></button>`).join(""); document.querySelectorAll(".scenario-item").forEach((node) => node.addEventListener("click", () => loadScenario(node.dataset.id))); }
 function loadScenario(id) { const item = catalog.find((candidate) => candidate.id === id); if (!item) return; editingId = id; $("#save-state").textContent = "локальный каталог"; $("#editor-title").textContent = item.title; $("#scenario-id").value = item.id; $("#scenario-purpose").value = item.purpose; $("#scenario-boundary").value = item.boundary; $("#example-ru").value = item.ru; $("#example-kk").value = item.kk; renderCatalog($("#catalog-search").value); }
 $("#catalog-search").addEventListener("input", (event) => renderCatalog(event.target.value));
-$("#new-scenario").addEventListener("click", () => { const id = `scenario_${Date.now()}`; catalog.unshift({ id, title: "Новый сценарий", purpose: "Опишите, какую задачу клиента решает сценарий.", boundary: "Опишите границу с близкими сценариями.", ru: "", kk: "" }); saveCatalog(); loadScenario(id); toast("Черновик сценария добавлен"); });
+$("#new-scenario").addEventListener("click", () => { if (catalog.length >= 100) { toast("Максимум 100 сценариев."); return; } const id = `scenario_${Date.now()}`; catalog.unshift({ id, title: "Новый сценарий", purpose: "Опишите, какую задачу клиента решает сценарий.", boundary: "Опишите границу с близкими сценариями.", ru: "", kk: "" }); saveCatalog(); loadScenario(id); toast("Черновик сценария добавлен"); });
 $("#scenario-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const id = $("#scenario-id").value.trim();
@@ -271,12 +395,13 @@ $("#scenario-form").addEventListener("submit", (event) => {
 });
 $("#delete-scenario").addEventListener("click", () => {
   if (catalog.length <= 1) { toast("Нужен хотя бы один сценарий"); return; }
+  if (gatewayUrl && gatewayFeatures.has("catalog_delete")) { gateway.send({ type: "catalog_delete", scenario_id: editingId }); return; }
   catalog = catalog.filter(item => item.id !== editingId);
   saveCatalog(); loadScenario(catalog[0].id);
   toast("Удалено только из локального каталога; серверный каталог не изменён.");
 });
 $("#all-routes").addEventListener("click", () => { showAllRoutes = !showAllRoutes; $("#all-routes").textContent = showAllRoutes ? "Последние 4" : "Все"; renderHistory(); });
-$("#handoff-queue").addEventListener("click", () => toast("Демо-карточка. Очередь операторов подключается на стороне backend."));
+$("#handoff-queue").addEventListener("click", () => gatewayFeatures.has("handoff_list") ? gateway.send({ type: "handoff_list" }) : toast("Демо-карточка. Очередь операторов подключается на стороне backend."));
 $("#export-csv").addEventListener("click", () => {
   const cell = value => '"' + String(value ?? "").replace(/^[=+@-]/, "'$&").replaceAll('"', '""') + '"';
   const rows = [["turn", "time", "scenario_id", "decision", "total_ms", "source"], ...[...history.values()].map(t => [t.turn, t.time, t.scenario || "", t.decision, t.total || totalOf(t.timings), t.source || t.path])];
