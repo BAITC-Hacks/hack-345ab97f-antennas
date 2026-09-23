@@ -1,0 +1,10 @@
+# LF in the repository for every text file, whatever the OS (the team uses Windows and others).
+* text=auto
+*.py text
+*.json text
+*.md text
+*.csv text
+*.txt text
+*.example text
+.gitignore text
+Makefile text
