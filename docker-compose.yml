@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_STRUCTURED_OUTPUT: ${LLM_STRUCTURED_OUTPUT:-true}
+      LLM_LOGPROBS: ${LLM_LOGPROBS:-true}
+      STT_PROVIDER: ${STT_PROVIDER:-none}
+      TTS_PROVIDER: ${TTS_PROVIDER:-none}
+      SPEECH_API_KEY: ${SPEECH_API_KEY:-}
+      STT_MODEL: ${STT_MODEL:-gpt-4o-mini-transcribe}
+      TTS_MODEL: ${TTS_MODEL:-gpt-4o-mini-tts}
+      TTS_VOICE: ${TTS_VOICE:-alloy}
+      ROUTER_CATALOG_PATH: /app/data/scenarios.json
+      DIALOG_DB_PATH: /app/storage/dialogs.sqlite3
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
+    volumes:
+      - ./data:/app/data
+      - dialog_data:/app/storage
+
+volumes:
+  dialog_data:

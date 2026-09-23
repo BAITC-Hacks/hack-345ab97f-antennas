@@ -1,0 +1,9 @@
+.git
+.venv*
+**/__pycache__
+**/.pytest_cache
+**/*.sqlite3*
+frontend
+router_prototype
+eval
+docs

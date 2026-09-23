@@ -1,4 +1,7 @@
-.PHONY: test eval eval-quick leakage
+.PHONY: run test eval eval-quick leakage
+
+run:
+	PYTHONPATH=backend uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 test:
 	PYTHONPATH=backend pytest backend/tests -q
