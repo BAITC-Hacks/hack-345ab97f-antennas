@@ -11,7 +11,11 @@ DEFAULT_CATALOG_PATH = Path(__file__).parents[3] / "data" / "scenarios.json"
 def load_catalog(path: str | Path = DEFAULT_CATALOG_PATH) -> dict[str, Any]:
     """Read and validate the catalog on every call so editor changes are immediate."""
     source = Path(path)
-    data = json.loads(source.read_text(encoding="utf-8"))
+    return validate_catalog(json.loads(source.read_text(encoding="utf-8")))
+
+
+def validate_catalog(data: dict[str, Any]) -> dict[str, Any]:
+    """Checks a catalog from a file or from a caller (the Node gateway sends its own snapshot)."""
     scenarios = data.get("scenarios")
     if not isinstance(scenarios, list) or not scenarios:
         raise ValueError("Catalog must contain a non-empty scenarios array")

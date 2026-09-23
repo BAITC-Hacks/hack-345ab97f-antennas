@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { WebSocketServer } from "ws";
 import { Store } from "./store.mjs";
 import { getConfig, loadEnv } from "./config.mjs";
-import { DemoProvider, OpenAIProvider } from "./provider.mjs";
+import { DemoProvider, OpenAIProvider, PythonProvider } from "./provider.mjs";
 import { Engine, createSession, attachGateway } from "./gateway.mjs";
 import { AppError, publicError } from "./errors.mjs";
 import { textInput } from "./validation.mjs";
@@ -30,7 +30,8 @@ const assets = new Map([["/",["index.html","text/html"]],["/index.html",["index.
 export async function createBackend({ config = getConfig(), provider, store } = {}) {
   const ownedStore = !store;
   store ||= await new Store(config.dataDir).init();
-  provider ||= config.mode === "openai" ? new OpenAIProvider(config) : new DemoProvider();
+  provider ||= config.mode === "openai" ? new OpenAIProvider(config)
+    : config.mode === "python" ? new PythonProvider(config) : new DemoProvider();
   const engine = new Engine({ store, config, provider });
   const wss = new WebSocketServer({ noServer: true, maxPayload: 65536, perMessageDeflate: false });
   const validateRequest = request => {

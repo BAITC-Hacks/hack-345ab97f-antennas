@@ -38,6 +38,26 @@ npm install --ignore-scripts
 4. Для распознавания и озвучивания дополнительно включите `VOICE_ENABLED=true`.
 5. Перезапустите сервер. Ключ из старой переписки не используйте и не присылайте в чат.
 
+### ROUTER_MODE=python — решение принимает Python-роутер команды
+
+Gateway остаётся входом (UI, голос, каталог, история, очередь handoff), а сценарий выбирает
+Python LLM-роутер из `backend/app/router/` (строгая схема, уверенность по logprobs, отдельное
+определение языка, eval в `eval/`). На каждую реплику Gateway отправляет `POST /gateway/route`
+с текстом, снимком **своего** каталога и состоянием сессии; ответ проходит ту же
+`validateDecision`. Решения роутера `continue` и `out_of_scope` приходят как `route` и `handoff`.
+
+```powershell
+# терминал 1, корень репозитория: Python-роутер на 8001 (ключ — в корневом .env)
+python -m uvicorn app.main:app --app-dir backend --port 8001
+# терминал 2: Gateway в режиме python
+cd voice-router-backend
+$env:ROUTER_MODE='python'; node src/server.mjs
+```
+
+Адрес роутера — `PYTHON_ROUTER_URL` (по умолчанию `http://127.0.0.1:8001`). Голос в этом режиме
+по-прежнему идёт через OpenAI: нужны `OPENAI_API_KEY` и `VOICE_ENABLED=true`. Если Python-роутер
+не запущен, реплика завершается ошибкой `router_unavailable`, трасса сохраняется.
+
 `STT_MODEL=gpt-transcribe`, `TTS_MODEL=gpt-4o-mini-tts`, `TTS_VOICE=coral` можно изменить на доступные проекту значения. Наличие ключа не доказывает доступ к моделям или наличие квоты.
 
 Адаптер LLM использует [Responses Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs): строгая JSON Schema плюс локальная проверка ID по снимку каталога. [STT](https://developers.openai.com/api/docs/guides/speech-to-text) получает WAV завершённой реплики; [TTS](https://developers.openai.com/api/docs/guides/text-to-speech) возвращает MP3. В интерфейсе указано, что голос синтезирован ИИ.

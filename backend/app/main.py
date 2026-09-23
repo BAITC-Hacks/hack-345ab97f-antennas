@@ -1,6 +1,7 @@
 """FastAPI server: REST + WebSocket for the frontend (contract: frontend/src/api/realApi.ts).
 
-Run from the repo root:  uvicorn app.main:app --app-dir backend --port 8000
+Run from the repo root:  uvicorn app.main:app --app-dir backend --port 8001
+(port 8000 belongs to the Node gateway, which calls POST /gateway/route here in ROUTER_MODE=python)
 """
 from __future__ import annotations
 
@@ -17,6 +18,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from .api.catalog import ScenarioIn, list_scenarios, save_scenario
+from .api.gateway import GatewayRouteIn, gateway_route
 from .dialog import CallSession
 from .router import LLMRouter
 from .trace import DialogStore
@@ -66,6 +68,16 @@ def create_app(router: LLMRouter | None = None, var_dir: Path | None = None) -> 
     @app.get("/health")
     async def health() -> dict[str, Any]:
         return {"status": "ok", "model": ctx["router"].provider.model, "scenarios": len(list_scenarios(ctx["catalog"]))}
+
+    @app.post("/gateway/route")
+    async def route_for_gateway(request: GatewayRouteIn) -> dict[str, Any]:
+        """Decision for voice-router-backend (ROUTER_MODE=python): its catalog, its session, our router."""
+        try:
+            return await gateway_route(ctx["router"], request)
+        except ValueError as error:  # invalid catalog snapshot (duplicate/empty ids)
+            raise HTTPException(422, str(error)) from error
+        except Exception as error:
+            raise HTTPException(502, f"Роутер не ответил: {type(error).__name__}") from error
 
     @app.get("/scenarios")
     async def get_scenarios() -> list[dict[str, Any]]:

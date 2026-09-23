@@ -38,6 +38,42 @@ export class DemoProvider {
   async transcribe() { throw new AppError("voice_disabled", "Распознавание речи требует OpenAI и VOICE_ENABLED=true.", 503); }
 }
 
+// The team's Python LLM router (backend/app, `make run`) makes the decision; voice stays on OpenAI.
+export class PythonProvider {
+  mode = "python";
+  constructor(config, fetchImpl = fetch) {
+    this.config = config; this.fetchImpl = fetchImpl;
+    this.voice = config.voiceEnabled ? new OpenAIProvider(config, fetchImpl) : null;
+  }
+  async route({ text, catalog, session, signal }) {
+    let response;
+    try {
+      const timeout = AbortSignal.timeout(this.config.timeoutMs);
+      response = await this.fetchImpl(this.config.pythonRouterUrl + "/gateway/route", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, catalog, session: { history: session.history, active_scenario: session.activeScenario, pending_intents: session.pendingIntents, clarify_count: session.clarifyCount } }),
+        signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+      });
+    } catch (error) {
+      if (signal?.aborted) throw new AppError("cancelled", "Запрос отменён.", 499);
+      throw new AppError(error.name === "TimeoutError" ? "timeout" : "router_unavailable", error.name === "TimeoutError" ? "Python-роутер не ответил вовремя." : "Python-роутер недоступен. Запустите его: make run.", 502);
+    }
+    if (!response.ok) { await response.body?.cancel(); throw new AppError("upstream_error", `Python-роутер вернул ${response.status}.`, 502); }
+    let parsed;
+    try { parsed = await response.json(); } catch { throw new AppError("invalid_model_output", "Python-роутер вернул не JSON.", 502); }
+    return validateDecision(parsed, catalog);
+  }
+  async transcribe(pcm, signal) {
+    if (!this.voice) throw new AppError("voice_disabled", "Распознавание речи требует OPENAI_API_KEY и VOICE_ENABLED=true.", 503);
+    return this.voice.transcribe(pcm, signal);
+  }
+  async synthesize(text, signal) {
+    if (!this.voice) throw new AppError("voice_disabled", "Озвучивание требует OPENAI_API_KEY и VOICE_ENABLED=true.", 503);
+    return this.voice.synthesize(text, signal);
+  }
+}
+
 export class OpenAIProvider {
   mode = "openai";
   constructor(config, fetchImpl = fetch) { this.config = config; this.fetchImpl = fetchImpl; }

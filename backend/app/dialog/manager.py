@@ -25,6 +25,9 @@ REPLIES = {
     },
     "continue": {"ru": "Спасибо, записал.", "kk": "Рахмет, жазып алдым."},
     "next": {"ru": "После этого помогу: {names}.", "kk": "Одан кейін мына сұрақ бойынша көмектесемін: {names}."},
+    # Scenario without response_example (e.g. the gateway catalog): a neutral acknowledgement.
+    "route": {"ru": "Помогу с вопросом «{name}». Расскажите, пожалуйста, подробнее.",
+              "kk": "«{name}» бойынша көмектесемін. Толығырақ айтып беріңізші."},
 }
 
 
@@ -92,7 +95,8 @@ def executor_reply(result: RouteResult, catalog: dict[str, Any]) -> str:
     scenarios = {item["id"]: item for item in catalog["scenarios"]}
     scenario = scenarios.get(decision.scenario_id, {})
     examples = scenario.get("response_example", {})
-    reply = examples.get(lang) or examples.get("ru") or f"Помогу: {scenario.get('name', decision.scenario_id)}."
+    reply = examples.get(lang) or examples.get("ru") or REPLIES["route"][lang].format(
+        name=scenario.get("name", decision.scenario_id))
     queued = [scenarios[i.scenario_id].get("name", i.scenario_id) for i in decision.additional_intents
               if i.scenario_id in scenarios]
     if queued:

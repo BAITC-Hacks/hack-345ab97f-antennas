@@ -48,11 +48,16 @@ class LLMRouter:
         await self.provider.warm_up()
 
     async def route(
-        self, state: DialogState, utterance: Utterance, on_commit: CommitCallback | None = None
+        self,
+        state: DialogState,
+        utterance: Utterance,
+        on_commit: CommitCallback | None = None,
+        catalog: dict[str, Any] | None = None,
     ) -> RouteResult:
         started = time.perf_counter()
         # Reload each request: catalog-editor changes require no server restart.
-        catalog = load_catalog(self.catalog_path)
+        # A caller may pass its own catalog snapshot (the Node gateway owns its catalog).
+        catalog = catalog if catalog is not None else load_catalog(self.catalog_path)
         decision_model = build_router_decision_model(scenario_ids(catalog))
         schema = decision_model.model_json_schema()
         messages = build_messages(build_static_prompt(catalog), state, utterance)

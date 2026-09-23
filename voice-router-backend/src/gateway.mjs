@@ -25,7 +25,7 @@ export class Engine {
     emit({ type: "turn_started", turn_id, mode: this.config.mode });
     try {
       if (input.pcm) {
-        if (!this.config.voiceEnabled) throw new AppError("voice_disabled", "Для речи задайте ROUTER_MODE=openai и VOICE_ENABLED=true.");
+        if (!this.config.voiceEnabled) throw new AppError("voice_disabled", "Для речи задайте ROUTER_MODE=openai или python и VOICE_ENABLED=true.");
         const start = performance.now(); text = await this.provider.transcribe(input.pcm, signal); timings.stt = elapsed(start);
       }
       text = textInput(text);
