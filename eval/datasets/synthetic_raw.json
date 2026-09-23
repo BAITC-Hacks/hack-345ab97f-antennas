@@ -1,0 +1,606 @@
+[
+  {
+    "id": "syn-001-1",
+    "text": "Маған бір сақтандыру керек сияқты және қазіргі полисті де ұзартып беріңізші қайсысынан бастаймыз",
+    "lang": "kk",
+    "type": "simple",
+    "state": null,
+    "expected": "buy_policy",
+    "expected_decision": "clarify",
+    "expected_additional": [
+      "renew_policy"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-001-2",
+    "text": "Күте тұрыңыз операторға қосыңызшы сосын жаңа көлікке полис пен ескісін ұзартуды сұраймын",
+    "lang": "ru",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "renew_policy",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "buy_policy",
+    "expected_decision": "handoff",
+    "expected_additional": [
+      "renew_policy"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-001-3",
+    "text": "Жаңа көлікке бөлек полис ашып ескі машинаның сақтандыруын да созайын",
+    "lang": "kk",
+    "type": "boundary",
+    "state": null,
+    "expected": "buy_policy",
+    "expected_decision": "clarify",
+    "expected_additional": [
+      "renew_policy"
+    ],
+    "confuser": "renew_policy"
+  },
+  {
+    "id": "syn-001-4",
+    "text": "Операторға соедините пожалуйста жаңа страховка аламын и старую продлить надо",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "buy_policy",
+    "expected_decision": "handoff",
+    "expected_additional": [
+      "renew_policy"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-001-5",
+    "text": "Сақтандыру жасатқым келеді қай түрін білмеймін сосын бар полисімді ұзарту керек",
+    "lang": "kk",
+    "type": "simple",
+    "state": null,
+    "expected": "buy_policy",
+    "expected_decision": "clarify",
+    "expected_additional": [
+      "renew_policy"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-002-1",
+    "text": "Операторға қосыңызшы полисті ұзарту және қазіргі мерзімін тексеру керек",
+    "lang": "kk",
+    "type": "simple",
+    "state": null,
+    "expected": "renew_policy",
+    "expected_decision": "handoff",
+    "expected_additional": [
+      "policy_status"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-002-2",
+    "text": "нет сначала непонятно продлевать ли мне его проверьте до какого числа он и потом решим",
+    "lang": "ru",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "policy_status",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "renew_policy",
+    "expected_decision": "clarify",
+    "expected_additional": [
+      "policy_status"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-002-3",
+    "text": "Полис жұмаға дейін жарамды бірақ күтпей келесі жылға ұзартып қазіргі мерзімін де айтыңыз",
+    "lang": "kk",
+    "type": "boundary",
+    "state": null,
+    "expected": "renew_policy",
+    "expected_decision": "route",
+    "expected_additional": [
+      "policy_status"
+    ],
+    "confuser": "buy_policy"
+  },
+  {
+    "id": "syn-002-4",
+    "text": "Полисті ұзарту керек и заодно скажите он сейчас вообще действует ма",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "renew_policy",
+    "expected_decision": "route",
+    "expected_additional": [
+      "policy_status"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-002-5",
+    "text": "продлите автостраховку на год и гляньте пожалуйста до какого числа старая",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "renew_policy",
+    "expected_decision": "route",
+    "expected_additional": [
+      "policy_status"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-003-1",
+    "text": "гляньте страховка на квартиру еще в силе и почему вчерашняя оплата не видна",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "policy_status",
+    "expected_decision": "route",
+    "expected_additional": [
+      "payment_issue"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-003-2",
+    "text": "погодите с выплатой скажите лучше действует ли сам договор и прошел ли последний платеж",
+    "lang": "ru",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "payment_issue",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "policy_status",
+    "expected_decision": "route",
+    "expected_additional": [
+      "payment_issue"
+    ],
+    "confuser": null
+  },
+  {
+    "id": "syn-003-3",
+    "text": "Полисім бар бірақ нақты қай күнге дейін жарамды екенін ғана білгім келеді",
+    "lang": "kk",
+    "type": "boundary",
+    "state": null,
+    "expected": "policy_status",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": "renew_policy"
+  },
+  {
+    "id": "syn-003-4",
+    "text": "Менің страховкам қазір активна ма и что именно она покрывает",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "policy_status",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-003-5",
+    "text": "можете проверить покрывает ли мой договор повреждение стекла",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "policy_status",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-004-1",
+    "text": "утром заплатил через приложение чек есть а оформление будто зависло",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "payment_issue",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-004-2",
+    "text": "Ақшаны қайтаруды қоя тұрыңыз кеше төледім неге жүйеде көрінбейді",
+    "lang": "kk",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "refund_request",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "payment_issue",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-004-3",
+    "text": "платеж ушел с карты но документ не включился возвращать пока не прошу",
+    "lang": "ru",
+    "type": "boundary",
+    "state": null,
+    "expected": "payment_issue",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": "refund_request"
+  },
+  {
+    "id": "syn-004-4",
+    "text": "Кеше оплатил картой ақша кетті а статус всё ещё ожидает",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "payment_issue",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-004-5",
+    "text": "два раза сняло сумму а подтверждения ни одного алло",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "payment_issue",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-005-1",
+    "text": "Шарттан бас тартамын пайдаланылмаған соманы есептеп қайтарыңыз",
+    "lang": "kk",
+    "type": "simple",
+    "state": null,
+    "expected": "refund_request",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-005-2",
+    "text": "подождите адрес потом я вообще хочу закрыть договор и получить остаток",
+    "lang": "ru",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "report_claim",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "refund_request",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-005-3",
+    "text": "оплата зависла уже не исправляйте отменяйте договор и делайте возврат",
+    "lang": "ru",
+    "type": "boundary",
+    "state": null,
+    "expected": "refund_request",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": "payment_issue"
+  },
+  {
+    "id": "syn-005-4",
+    "text": "Полис керек емес расторгните его и ақшаны картаға салыңыз",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "refund_request",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-005-5",
+    "text": "Қызметтен бас тарттым қалған ақшамды кері аударыңызшы",
+    "lang": "kk",
+    "type": "simple",
+    "state": null,
+    "expected": "refund_request",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-006-1",
+    "text": "сегодня во дворе ветка упала на капот куда сообщить о происшествии",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "report_claim",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-006-2",
+    "text": "давайте не про срок ночью квартиру залило хочу зарегистрировать случай",
+    "lang": "ru",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "claim_status",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "report_claim",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-006-3",
+    "text": "авария была час назад раньше никуда не обращался примите сообщение",
+    "lang": "ru",
+    "type": "boundary",
+    "state": null,
+    "expected": "report_claim",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": "claim_status"
+  },
+  {
+    "id": "syn-006-4",
+    "text": "Жолда соқтығысып қалдық заявление қалай берем что сейчас делать",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "report_claim",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-006-5",
+    "text": "чемодан пропал во время поездки хочу открыть страховой случай",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "report_claim",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-007-1",
+    "text": "по делу о заливе тишина уже третья неделя на каком этапе проверка",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "claim_status",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-007-2",
+    "text": "новый случай не надо вернемся к моему заявлению когда будет решение",
+    "lang": "ru",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "change_personal_data",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "claim_status",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-007-3",
+    "text": "Өтініш бұрын тіркелген енді өтемақы қашан аударылатынын айтыңыз",
+    "lang": "kk",
+    "type": "boundary",
+    "state": null,
+    "expected": "claim_status",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": "report_claim"
+  },
+  {
+    "id": "syn-007-4",
+    "text": "Мен құжат тапсырғанмын выплата қашан болады статусын қараңызшы",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "claim_status",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-007-5",
+    "text": "номер дела семь восемь один что там решили по нему",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "claim_status",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-008-1",
+    "text": "в договоре старый имейл замените на новый который сейчас продиктую",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "change_personal_data",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-008-2",
+    "text": "Жеткізуді кейін қараймыз алдымен шарттағы тегімді жаңарту қажет",
+    "lang": "kk",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "change_delivery_address",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "change_personal_data",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-008-3",
+    "text": "я переехала измените именно адрес прописки в договоре не место доставки",
+    "lang": "ru",
+    "type": "boundary",
+    "state": null,
+    "expected": "change_personal_data",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": "change_delivery_address"
+  },
+  {
+    "id": "syn-008-4",
+    "text": "Телефон ауысты поменяйте контакт в договоре на новый номер",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "change_personal_data",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-008-5",
+    "text": "в фамилии при оформлении распознали букву не так исправьте пожалуйста",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "change_personal_data",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-009-1",
+    "text": "Қағаз құжатты бұрынғы үйге емес жаңа мекенжайға жіберіңіз",
+    "lang": "kk",
+    "type": "simple",
+    "state": null,
+    "expected": "change_delivery_address",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-009-2",
+    "text": "с данными закончили теперь курьер пусть привезет бумаги в офис",
+    "lang": "ru",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "add_driver",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "change_delivery_address",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-009-3",
+    "text": "регистрацию не меняю только точку куда курьер везет конверт",
+    "lang": "ru",
+    "type": "boundary",
+    "state": null,
+    "expected": "change_delivery_address",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": "change_personal_data"
+  },
+  {
+    "id": "syn-009-4",
+    "text": "Полисті доставьте пожалуйста басқа адреске я там буду после шести",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "change_delivery_address",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-009-5",
+    "text": "Құжаттарды Абылай хан көшесі қырық екіге әкелсін",
+    "lang": "kk",
+    "type": "simple",
+    "state": null,
+    "expected": "change_delivery_address",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-010-1",
+    "text": "в действующую автостраховку внесите брата он иногда берет машину",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "add_driver",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-010-2",
+    "text": "телефон оставьте как есть лучше добавим второго человека за руль",
+    "lang": "ru",
+    "type": "topic_switch",
+    "state": {
+      "active_scenario": "buy_policy",
+      "last_assistant_message": "Уточните, пожалуйста, детали предыдущего вопроса."
+    },
+    "expected": "add_driver",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-010-3",
+    "text": "себе данные не меняю хочу чтобы по полису мог ездить еще отец",
+    "lang": "ru",
+    "type": "boundary",
+    "state": null,
+    "expected": "add_driver",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": "change_personal_data"
+  },
+  {
+    "id": "syn-010-4",
+    "text": "Полиске әйелімді қосыңыз она тоже будет водить по выходным",
+    "lang": "mixed",
+    "type": "mixed",
+    "state": null,
+    "expected": "add_driver",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  },
+  {
+    "id": "syn-010-5",
+    "text": "уберите бывшего владельца из списка допущенных водителей",
+    "lang": "ru",
+    "type": "simple",
+    "state": null,
+    "expected": "add_driver",
+    "expected_decision": "route",
+    "expected_additional": [],
+    "confuser": null
+  }
+]
