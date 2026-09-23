@@ -1,0 +1,684 @@
+{
+  "date": "2026-09-23T14:03:13",
+  "model": "gpt-4.1-mini",
+  "accuracy": 1.0,
+  "latency_p50_ms": 2519.45340000384,
+  "latency_p95_ms": 3627.263499991386,
+  "results": [
+    {
+      "id": "t01",
+      "correct": true,
+      "latency_ms": 3627,
+      "scenario_id": "buy_policy",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "renew_policy",
+          "confidence": 0.3,
+          "why_not": "клиент хочет купить, не продлить"
+        },
+        {
+          "scenario_id": "add_driver",
+          "confidence": 0.2,
+          "why_not": "нет упоминания о существующем полисе"
+        }
+      ],
+      "slots": [
+        {
+          "name": "product_type",
+          "value": "автогражданка"
+        }
+      ],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент хочет купить страховку на машину, подходит buy_policy"
+    },
+    {
+      "id": "t02",
+      "correct": true,
+      "latency_ms": 2045,
+      "scenario_id": "policy_status",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "renew_policy",
+          "confidence": 0.3,
+          "why_not": "клиент не просит продлить полис"
+        },
+        {
+          "scenario_id": "payment_issue",
+          "confidence": 0.2,
+          "why_not": "клиент не жалуется на оплату"
+        }
+      ],
+      "slots": [],
+      "language": "kk",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент хочет узнать статус полиса, подходит policy_status"
+    },
+    {
+      "id": "t03",
+      "correct": true,
+      "latency_ms": 4257,
+      "scenario_id": "report_claim",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "claim_status",
+          "confidence": 0.3,
+          "why_not": "клиент не спрашивает о статусе выплаты"
+        },
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.2,
+          "why_not": "клиент не интересуется сроком действия полиса"
+        }
+      ],
+      "slots": [
+        {
+          "name": "event_type",
+          "value": "затопление"
+        },
+        {
+          "name": "event_date",
+          "value": "вчера"
+        }
+      ],
+      "language": "ru",
+      "topic_switch": true,
+      "emotion": "anxious",
+      "reason": "Клиент сообщает о страховом случае - затоплении квартиры вчера"
+    },
+    {
+      "id": "t04",
+      "correct": true,
+      "latency_ms": 2260,
+      "scenario_id": "claim_status",
+      "decision": "route",
+      "confidence": 0.9,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "report_claim",
+          "confidence": 0.6,
+          "why_not": "может быть новый страховой случай"
+        },
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.3,
+          "why_not": "клиент спрашивает про выплату, не про полис"
+        }
+      ],
+      "slots": [],
+      "language": "kk",
+      "topic_switch": true,
+      "emotion": "anxious",
+      "reason": "Клиент спрашивает про статус выплаты по заявленному случаю"
+    },
+    {
+      "id": "t05",
+      "correct": true,
+      "latency_ms": 2882,
+      "scenario_id": "add_driver",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "buy_policy",
+          "confidence": 0.3,
+          "why_not": "возможно нужен новый полис, но клиент говорит о вписании водителя"
+        },
+        {
+          "scenario_id": "change_personal_data",
+          "confidence": 0.2,
+          "why_not": "изменение данных не про добавление водителя"
+        }
+      ],
+      "slots": [
+        {
+          "name": "driver_name",
+          "value": "жена"
+        }
+      ],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент хочет добавить водителя в полис"
+    },
+    {
+      "id": "t06",
+      "correct": true,
+      "latency_ms": 2997,
+      "scenario_id": "change_personal_data",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "change_delivery_address",
+          "confidence": 0.3,
+          "why_not": "Речь о телефоне, не о доставке"
+        },
+        {
+          "scenario_id": "add_driver",
+          "confidence": 0.2,
+          "why_not": "Нет упоминания водителя"
+        }
+      ],
+      "slots": [
+        {
+          "name": "field",
+          "value": "телефон"
+        },
+        {
+          "name": "new_value",
+          "value": "не указан"
+        }
+      ],
+      "language": "kk",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент просит изменить номер телефона в договоре"
+    },
+    {
+      "id": "t07",
+      "correct": true,
+      "latency_ms": 2803,
+      "scenario_id": "payment_issue",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "refund_request",
+          "confidence": 0.3,
+          "why_not": "клиент не просит вернуть деньги"
+        },
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.2,
+          "why_not": "клиент говорит про оплату, не про статус полиса"
+        }
+      ],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "anxious",
+      "reason": "клиент описывает проблему с оплатой, полис не активирован"
+    },
+    {
+      "id": "t08",
+      "correct": true,
+      "latency_ms": 2638,
+      "scenario_id": "refund_request",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [
+        {
+          "scenario_id": "payment_issue",
+          "confidence": 0.7
+        }
+      ],
+      "alternatives": [
+        {
+          "scenario_id": "payment_issue",
+          "confidence": 0.7,
+          "why_not": "может быть проблема с оплатой, но клиент просит возврат"
+        },
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.3,
+          "why_not": "клиент не просто спрашивает о полисе, а требует возврат"
+        }
+      ],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": true,
+      "emotion": "irritated",
+      "reason": "Клиент требует расторгнуть договор и вернуть деньги"
+    },
+    {
+      "id": "t09",
+      "correct": true,
+      "latency_ms": 3016,
+      "scenario_id": "policy_status",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [
+        {
+          "scenario_id": "renew_policy",
+          "confidence": 0.7
+        }
+      ],
+      "alternatives": [
+        {
+          "scenario_id": "renew_policy",
+          "confidence": 0.6,
+          "why_not": "клиент спрашивает про срок действия полиса, не продление"
+        },
+        {
+          "scenario_id": "buy_policy",
+          "confidence": 0.3,
+          "why_not": "клиент уже имеет полис, хочет узнать срок"
+        }
+      ],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент спрашивает срок действия полиса, подходит policy_status"
+    },
+    {
+      "id": "t10",
+      "correct": true,
+      "latency_ms": 1999,
+      "scenario_id": "renew_policy",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.4,
+          "why_not": "клиент хочет продлить, не просто узнать статус"
+        },
+        {
+          "scenario_id": "buy_policy",
+          "confidence": 0.3,
+          "why_not": "клиент уже имеет полис, хочет продлить"
+        }
+      ],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент хочет продлить существующий полис на год"
+    },
+    {
+      "id": "t11",
+      "correct": true,
+      "latency_ms": 1706,
+      "scenario_id": "change_personal_data",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "change_delivery_address",
+          "confidence": 0.4,
+          "why_not": "клиент говорит об адресе регистрации, не доставки"
+        }
+      ],
+      "slots": [
+        {
+          "name": "field",
+          "value": "адрес регистрации"
+        }
+      ],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент хочет изменить адрес регистрации в договоре"
+    },
+    {
+      "id": "t12",
+      "correct": true,
+      "latency_ms": 2395,
+      "scenario_id": "change_delivery_address",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "change_personal_data",
+          "confidence": 0.3,
+          "why_not": "речь именно об адресе доставки, не личные данные"
+        },
+        {
+          "scenario_id": "buy_policy",
+          "confidence": 0.2,
+          "why_not": "нет запроса на покупку, только изменение адреса доставки"
+        }
+      ],
+      "slots": [
+        {
+          "name": "new_address",
+          "value": "Кабанбай батыра 20"
+        }
+      ],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент просит изменить адрес доставки полиса"
+    },
+    {
+      "id": "t13",
+      "correct": true,
+      "latency_ms": 2204,
+      "scenario_id": "claim_status",
+      "decision": "route",
+      "confidence": 0.9,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "report_claim",
+          "confidence": 0.6,
+          "why_not": "может быть новый страховой случай"
+        },
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.3,
+          "why_not": "клиент спрашивает про выплату, не про полис"
+        }
+      ],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "anxious",
+      "reason": "Клиент спрашивает о выплате по уже заявленному страховому случаю"
+    },
+    {
+      "id": "t14",
+      "correct": true,
+      "latency_ms": 2519,
+      "scenario_id": "payment_issue",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.3,
+          "why_not": "клиент спрашивает про оплату, не про статус полиса"
+        },
+        {
+          "scenario_id": "refund_request",
+          "confidence": 0.2,
+          "why_not": "клиент не просит вернуть деньги"
+        }
+      ],
+      "slots": [
+        {
+          "name": "payment_date",
+          "value": "вчера"
+        }
+      ],
+      "language": "mixed",
+      "topic_switch": false,
+      "emotion": "anxious",
+      "reason": "Клиент говорит об оплате и неактивном полисе, подходит payment_issue"
+    },
+    {
+      "id": "t15",
+      "correct": true,
+      "latency_ms": 2217,
+      "scenario_id": "renew_policy",
+      "decision": "route",
+      "confidence": 0.9,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.6,
+          "why_not": "клиент хочет продлить, не просто узнать статус"
+        }
+      ],
+      "slots": [],
+      "language": "mixed",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент хочет продлить полис, но не помнит номер"
+    },
+    {
+      "id": "t16",
+      "correct": true,
+      "latency_ms": 2952,
+      "scenario_id": "report_claim",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "claim_status",
+          "confidence": 0.3,
+          "why_not": "клиент не спрашивает о статусе выплаты"
+        },
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.2,
+          "why_not": "клиент не интересуется сроком действия полиса"
+        }
+      ],
+      "slots": [
+        {
+          "name": "event_type",
+          "value": "авария"
+        }
+      ],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "anxious",
+      "reason": "Клиент сообщает о страховом случае, хочет заявить о ДТП"
+    },
+    {
+      "id": "t17",
+      "correct": true,
+      "latency_ms": 2172,
+      "scenario_id": "refund_request",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "payment_issue",
+          "confidence": 0.3,
+          "why_not": "клиент хочет вернуть деньги, не просто проблему с оплатой"
+        },
+        {
+          "scenario_id": "renew_policy",
+          "confidence": 0.1,
+          "why_not": "нет запроса на продление, а на расторжение договора"
+        }
+      ],
+      "slots": [],
+      "language": "mixed",
+      "topic_switch": true,
+      "emotion": "neutral",
+      "reason": "Клиент хочет расторгнуть договор и вернуть деньги"
+    },
+    {
+      "id": "t18",
+      "correct": true,
+      "latency_ms": 3065,
+      "scenario_id": "payment_issue",
+      "decision": "route",
+      "confidence": 0.9,
+      "additional_intents": [
+        {
+          "scenario_id": "change_delivery_address",
+          "confidence": 0.8
+        }
+      ],
+      "alternatives": [
+        {
+          "scenario_id": "refund_request",
+          "confidence": 0.5,
+          "why_not": "клиент не просит возврат денег"
+        },
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.4,
+          "why_not": "клиент жалуется на оплату, не просто спрашивает"
+        }
+      ],
+      "slots": [
+        {
+          "name": "payment_date",
+          "value": "вчера"
+        }
+      ],
+      "language": "ru",
+      "topic_switch": true,
+      "emotion": "irritated",
+      "reason": "клиент жалуется на оплату и хочет сменить адрес доставки"
+    },
+    {
+      "id": "t19",
+      "correct": true,
+      "latency_ms": 2984,
+      "scenario_id": "policy_status",
+      "decision": "route",
+      "confidence": 0.9,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "report_claim",
+          "confidence": 0.7,
+          "why_not": "клиент начал с вопроса о полисе, не о страховом случае"
+        },
+        {
+          "scenario_id": "renew_policy",
+          "confidence": 0.4,
+          "why_not": "нет явного запроса на продление полиса"
+        }
+      ],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": true,
+      "emotion": "anxious",
+      "reason": "Клиент переключился с заявления о страховом случае на вопрос о статусе полиса"
+    },
+    {
+      "id": "t20",
+      "correct": true,
+      "latency_ms": 1839,
+      "scenario_id": "change_delivery_address",
+      "decision": "continue",
+      "confidence": 1.0,
+      "additional_intents": [],
+      "alternatives": [],
+      "slots": [
+        {
+          "name": "new_address",
+          "value": "Астана, Туран 55, квартира 12"
+        }
+      ],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент отвечает на вопрос о новом адресе доставки"
+    },
+    {
+      "id": "t21",
+      "correct": true,
+      "latency_ms": 2829,
+      "scenario_id": "payment_issue",
+      "decision": "route",
+      "confidence": 0.9,
+      "additional_intents": [
+        {
+          "scenario_id": "renew_policy",
+          "confidence": 0.7
+        }
+      ],
+      "alternatives": [
+        {
+          "scenario_id": "refund_request",
+          "confidence": 0.5,
+          "why_not": "клиент не просит возврат денег"
+        },
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.4,
+          "why_not": "клиент говорит про оплату, не про статус полиса"
+        }
+      ],
+      "slots": [
+        {
+          "name": "payment_date",
+          "value": "кеше"
+        }
+      ],
+      "language": "kk",
+      "topic_switch": true,
+      "emotion": "neutral",
+      "reason": "Клиент переключается с продления на проблему с оплатой"
+    },
+    {
+      "id": "t22",
+      "correct": true,
+      "latency_ms": 2300,
+      "scenario_id": "renew_policy",
+      "decision": "route",
+      "confidence": 0.95,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "policy_status",
+          "confidence": 0.4,
+          "why_not": "клиент хочет продлить, не просто узнать статус"
+        },
+        {
+          "scenario_id": "payment_issue",
+          "confidence": 0.3,
+          "why_not": "клиент переключился на продление, не жалоба на оплату"
+        }
+      ],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": true,
+      "emotion": "neutral",
+      "reason": "Клиент явно переключился с проблемы оплаты на продление полиса"
+    },
+    {
+      "id": "t23",
+      "correct": true,
+      "latency_ms": 2227,
+      "scenario_id": "policy_status",
+      "decision": "clarify",
+      "confidence": 0.6,
+      "additional_intents": [],
+      "alternatives": [
+        {
+          "scenario_id": "payment_issue",
+          "confidence": 0.3,
+          "why_not": "может быть проблема с оплатой"
+        },
+        {
+          "scenario_id": "refund_request",
+          "confidence": 0.1,
+          "why_not": "возможно клиент хочет вернуть деньги"
+        }
+      ],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "клиент говорит о проблеме со страховкой, нужно уточнить"
+    },
+    {
+      "id": "t24",
+      "correct": true,
+      "latency_ms": 1812,
+      "scenario_id": null,
+      "decision": "handoff",
+      "confidence": 1.0,
+      "additional_intents": [],
+      "alternatives": [],
+      "slots": [],
+      "language": "ru",
+      "topic_switch": false,
+      "emotion": "neutral",
+      "reason": "Клиент просит связать с оператором"
+    }
+  ]
+}
