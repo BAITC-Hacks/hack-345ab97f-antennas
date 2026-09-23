@@ -18,12 +18,14 @@ from app.router.schema import DialogState, Utterance, build_router_decision_mode
 CATALOG = Path(__file__).parents[2] / "data" / "scenarios.json"
 
 
-def test_prompt_v12_routing_rules_are_semantic_and_supervisor_text_is_russian():
-    assert PROMPT_VERSION == "router-v1.2"
+def test_prompt_routing_rules_are_semantic_and_supervisor_text_is_russian():
+    assert PROMPT_VERSION == "router-v1.3"
     assert "supplies exactly what the robot's latest question requested" in INSTRUCTIONS
     assert "return to a topic in topic_stack" in INSTRUCTIONS
     assert "too vague to select a catalog scenario" in INSTRUCTIONS
+    assert "Missing parameters (policy number, date, address) are not vagueness" in INSTRUCTIONS
     assert "reason and every why_not in Russian" in INSTRUCTIONS
+    assert "language is the language of the client's latest utterance" in INSTRUCTIONS
 
 
 def answer(scenario="payment_issue", decision="route", alternatives=None, additional=None, topic_switch=False):
@@ -155,6 +157,32 @@ def test_low_measured_margin_turns_route_into_clarify():
     result = asyncio.run(router.route(DialogState(), Utterance(text="Поменяйте адрес")))
     assert result.final_action == "clarify"
     assert result.clarify_question
+
+
+class LanguageProvider(FakeProvider):
+    def __init__(self, responses, language=None, fail=False):
+        super().__init__(responses)
+        self.language, self.fail = language, fail
+
+    async def detect_language(self, text):
+        if self.fail:
+            raise RuntimeError("language call failed")
+        return self.language
+
+
+def test_separate_language_detection_overrides_router_language():
+    # The routing call says "ru" for a Kazakh request; the dedicated call says "kk" and wins.
+    payload = answer(decision="clarify", alternatives=TWO_ALTERNATIVES)
+    router = LLMRouter(LanguageProvider([payload], language="kk"), CATALOG)
+    result = asyncio.run(router.route(DialogState(), Utterance(text="Сақтандыруға байланысты сұрағым бар")))
+    assert result.decision.language == "kk"
+    assert result.clarify_question.startswith("Нақтылаңыз")
+
+
+def test_failed_language_detection_keeps_routing_result():
+    router = LLMRouter(LanguageProvider([answer("renew_policy")], fail=True), CATALOG)
+    result = asyncio.run(router.route(DialogState(), Utterance(text="Хочу продлить полис")))
+    assert result.final_action == "route" and result.decision.language == "ru"
 
 
 def test_schema_meets_openai_strict_mode():

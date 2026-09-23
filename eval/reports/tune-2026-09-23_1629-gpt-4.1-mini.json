@@ -1,0 +1,621 @@
+{
+  "created_at": "2026-09-23T11:29:00.675078+00:00",
+  "dataset": "tune",
+  "model": "gpt-4.1-mini",
+  "accuracy": 1.0,
+  "scenario_accuracy": 1.0,
+  "language_detection": 1.0,
+  "multi_intent_found": "1/1",
+  "latency_p50_ms": 1123.151,
+  "latency_p95_ms": 1406.635,
+  "commit_p50_ms": 655.113,
+  "accuracy_by_type": {
+    "boundary": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 1.0
+    },
+    "clarify": {
+      "correct": 1,
+      "total": 1,
+      "accuracy": 1.0
+    },
+    "handoff": {
+      "correct": 1,
+      "total": 1,
+      "accuracy": 1.0
+    },
+    "mixed": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 1.0
+    },
+    "multi": {
+      "correct": 1,
+      "total": 1,
+      "accuracy": 1.0
+    },
+    "simple": {
+      "correct": 4,
+      "total": 4,
+      "accuracy": 1.0
+    },
+    "topic_switch": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 1.0
+    }
+  },
+  "accuracy_by_language": {
+    "kk": {
+      "correct": 2,
+      "total": 2,
+      "accuracy": 1.0
+    },
+    "mixed": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 1.0
+    },
+    "ru": {
+      "correct": 11,
+      "total": 11,
+      "accuracy": 1.0
+    }
+  },
+  "top_confusions": [],
+  "results": [
+    {
+      "id": "t05",
+      "type": "simple",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "add_driver",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "driver_relation",
+            "value": "жена"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент хочет вписать жену в страховку, подходит сценарий add_driver"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 655.113,
+        "full": 1131.128
+      }
+    },
+    {
+      "id": "t01",
+      "type": "simple",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "buy_policy",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "insurance_object",
+            "value": "машина"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент хочет купить новый полис на машину"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 667.179,
+        "full": 1146.873
+      }
+    },
+    {
+      "id": "t20",
+      "type": "topic_switch",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "change_delivery_address",
+        "decision": "continue",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "new_address",
+            "value": "Астана, Туран 55, квартира 12"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент дал новый адрес доставки, продолжить сценарий изменения адреса доставки"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "continue",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 964.371,
+        "full": 1590.755
+      }
+    },
+    {
+      "id": "t11",
+      "type": "boundary",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "change_personal_data",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "address_registration",
+            "value": "адрес регистрации"
+          }
+        ],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент хочет изменить адрес регистрации в договоре"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 625.435,
+        "full": 1119.581
+      }
+    },
+    {
+      "id": "t13",
+      "type": "boundary",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "claim_status",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент спрашивает о выплате по заявленному страховому случаю"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 636.84,
+        "full": 1109.839
+      }
+    },
+    {
+      "id": "t23",
+      "type": "clarify",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": null,
+        "decision": "clarify",
+        "alternatives": [
+          {
+            "scenario_id": "payment_issue",
+            "why_not": "слишком общая формулировка, неясно, какая именно проблема со страховкой"
+          }
+        ],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "недостаточно информации о проблеме со страховкой"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "clarify",
+      "clarify_question": "Уточните: вы хотите Проблема с оплатой или другой вопрос?",
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 678.097,
+        "full": 1379.316
+      }
+    },
+    {
+      "id": "t24",
+      "type": "handoff",
+      "lang": "kk",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": null,
+        "decision": "handoff",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "kk",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент просит соединить с оператором"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "handoff",
+      "clarify_question": null,
+      "handoff_card": {
+        "summary": "Операторға қосыңызшы, тірі адаммен сөйлескім келеді",
+        "candidates": [],
+        "slots": [],
+        "attempts": 0,
+        "reason": "Клиент просит соединить с оператором",
+        "language": "kk",
+        "emotion": "neutral"
+      },
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 679.58,
+        "full": 1035.686
+      }
+    },
+    {
+      "id": "t14",
+      "type": "mixed",
+      "lang": "mixed",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "payment_issue",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [
+          {
+            "name": "payment_status",
+            "value": "оплатил"
+          },
+          {
+            "name": "issue_description",
+            "value": "полис не активен"
+          }
+        ],
+        "language": "mixed",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент сообщил об оплате, но полис не активен, подходит payment_issue"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 697.334,
+        "full": 1406.635
+      }
+    },
+    {
+      "id": "t18",
+      "type": "multi",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "payment_issue",
+        "decision": "route",
+        "alternatives": [
+          {
+            "scenario_id": "change_delivery_address",
+            "why_not": "Вторая часть запроса про адрес доставки, но основной запрос про оплату"
+          }
+        ],
+        "additional_intents": [
+          {
+            "scenario_id": "change_delivery_address"
+          }
+        ],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": true,
+        "emotion": "neutral",
+        "reason": "Запрос про оплату и смену адреса доставки, два разных сценария"
+      },
+      "confidence": 1.0,
+      "margin": 0.9999,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 641.363,
+        "full": 1395.112
+      }
+    },
+    {
+      "id": "t07",
+      "type": "boundary",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "payment_issue",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент сообщает о проблеме с оплатой, полис не активирован"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 604.443,
+        "full": 952.39
+      }
+    },
+    {
+      "id": "t19",
+      "type": "topic_switch",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "policy_status",
+        "decision": "route",
+        "alternatives": [
+          {
+            "scenario_id": "report_claim",
+            "why_not": "Клиент спрашивает про срок действия полиса, а не про страховой случай"
+          }
+        ],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": true,
+        "emotion": "neutral",
+        "reason": "Клиент сменил тему на срок действия полиса"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 630.42,
+        "full": 1123.151
+      }
+    },
+    {
+      "id": "t02",
+      "type": "simple",
+      "lang": "kk",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "policy_status",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "kk",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент спрашивает о сроке действия полиса"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 689.399,
+        "full": 1033.846
+      }
+    },
+    {
+      "id": "t17",
+      "type": "mixed",
+      "lang": "mixed",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "refund_request",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "mixed",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент хочет расторгнуть договор и вернуть деньги"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 607.057,
+        "full": 905.788
+      }
+    },
+    {
+      "id": "t22",
+      "type": "topic_switch",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "renew_policy",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": true,
+        "emotion": "neutral",
+        "reason": "Клиент хочет вернуться к продлению, переключение темы на renew_policy"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 573.731,
+        "full": 933.178
+      }
+    },
+    {
+      "id": "t15",
+      "type": "mixed",
+      "lang": "mixed",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "renew_policy",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "mixed",
+        "topic_switch": false,
+        "emotion": "neutral",
+        "reason": "Клиент хочет продлить полис, но не указал номер полиса"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 613.294,
+        "full": 998.658
+      }
+    },
+    {
+      "id": "t03",
+      "type": "simple",
+      "lang": "ru",
+      "language_correct": true,
+      "correct": true,
+      "scenario_correct": true,
+      "decision": {
+        "scenario_id": "report_claim",
+        "decision": "route",
+        "alternatives": [],
+        "additional_intents": [],
+        "slots": [],
+        "language": "ru",
+        "topic_switch": false,
+        "emotion": "anxious",
+        "reason": "Клиент сообщает о страховом случае - затопление квартиры"
+      },
+      "confidence": 1.0,
+      "margin": 1.0,
+      "final_action": "route",
+      "clarify_question": null,
+      "handoff_card": null,
+      "path": "llm",
+      "model": "gpt-4.1-mini",
+      "prompt_version": "router-v1.3",
+      "timings_ms": {
+        "commit": 785.165,
+        "full": 1135.339
+      }
+    }
+  ]
+}

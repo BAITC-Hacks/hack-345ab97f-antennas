@@ -1,6 +1,7 @@
 """Async LLM-only router with validated JSON and streaming early commit."""
 from __future__ import annotations
 
+import asyncio
 import inspect
 import json
 import os
@@ -56,18 +57,24 @@ class LLMRouter:
         schema = decision_model.model_json_schema()
         messages = build_messages(build_static_prompt(catalog), state, utterance)
 
-        raw, tokens, commit_ms = await self._stream_once(messages, schema, started, on_commit)
+        # Language runs in parallel with routing: no extra latency on the critical path.
+        language_task = asyncio.create_task(self.provider.detect_language(utterance.text))
         try:
-            decision = decision_model.model_validate_json(raw)
-        except (ValidationError, ValueError, json.JSONDecodeError) as error:
-            # Exactly one repair attempt, with the error as feedback. Free text is never executed.
-            repair = messages + [
-                {"role": "assistant", "content": raw},
-                {"role": "user", "content": f"Invalid JSON: {_error_summary(error)}. Return the corrected JSON only."},
-            ]
-            response = await self.provider.request(repair, schema)
-            raw, tokens = response.text, response.tokens
-            decision = decision_model.model_validate_json(raw)
+            raw, tokens, commit_ms = await self._stream_once(messages, schema, started, on_commit)
+            try:
+                decision = decision_model.model_validate_json(raw)
+            except (ValidationError, ValueError, json.JSONDecodeError) as error:
+                # Exactly one repair attempt, with the error as feedback. Free text is never executed.
+                repair = messages + [
+                    {"role": "assistant", "content": raw},
+                    {"role": "user", "content": f"Invalid JSON: {_error_summary(error)}. Return the corrected JSON only."},
+                ]
+                response = await self.provider.request(repair, schema)
+                raw, tokens = response.text, response.tokens
+                decision = decision_model.model_validate_json(raw)
+            decision = await _with_language(decision, language_task)
+        finally:
+            language_task.cancel()  # no-op when finished; stops it if routing failed
 
         confidence, margin, measured = calculate_confidence(raw, tokens, len(decision.alternatives))
         final_action = _final_action(decision, confidence, margin, measured, state.clarify_count, self)
@@ -110,6 +117,17 @@ class LLMRouter:
                     if inspect.isawaitable(returned):
                         await returned
         return raw, tokens, commit_ms
+
+
+async def _with_language(decision: Any, task: asyncio.Task) -> Any:
+    """Use the separate detector's language when it answered; routing never fails because of it."""
+    try:
+        language = await task
+    except Exception:
+        return decision
+    if language in {"ru", "kk", "mixed"} and language != decision.language:
+        return decision.model_copy(update={"language": language})
+    return decision
 
 
 def _early_fields(raw: str) -> dict[str, Any] | None:

@@ -39,5 +39,9 @@ class LLMProvider(ABC):
     def stream(self, messages: list[dict[str, str]], schema: dict[str, Any]) -> AsyncIterator[LLMChunk]:
         """Stream JSON fragments in order."""
 
+    async def detect_language(self, text: str) -> str | None:
+        """Language of the utterance ("ru", "kk", "mixed") from a separate short call; None = not supported."""
+        return None
+
     async def warm_up(self) -> None:
         """Initialize reusable transports without consuming a completion by default."""

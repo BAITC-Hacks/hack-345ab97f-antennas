@@ -1,12 +1,27 @@
 """OpenAI provider using one reusable async keep-alive client."""
 from __future__ import annotations
 
+import json
 from collections.abc import AsyncIterator
 from typing import Any
 
 from .base import LLMChunk, LLMProvider, LLMResponse, TokenLogprob
 
 TOP_LOGPROBS = 3  # alternatives per token: enough to see the runner-up scenario
+
+# Inside the routing call the model mislabels Kazakh handoff/out_of_scope requests as "ru";
+# asked alone, it identifies the language reliably. So language gets its own tiny call.
+LANGUAGE_QUESTION = "Language of this client utterance: kk = Kazakh, ru = Russian, mixed = both Kazakh and Russian words. Utterance: "
+LANGUAGE_SCHEMA = {
+    "name": "utterance_language",
+    "strict": True,
+    "schema": {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["language"],
+        "properties": {"language": {"type": "string", "enum": ["ru", "kk", "mixed"]}},
+    },
+}
 
 
 class OpenAIProvider(LLMProvider):
@@ -49,6 +64,16 @@ class OpenAIProvider(LLMProvider):
             choice = event.choices[0] if event.choices else None
             if choice and choice.delta.content:
                 yield LLMChunk(choice.delta.content, _extract_tokens(choice))
+
+    async def detect_language(self, text: str) -> str | None:
+        response = await self.client.chat.completions.create(
+            model=self.model,
+            messages=[{"role": "user", "content": LANGUAGE_QUESTION + text}],
+            response_format={"type": "json_schema", "json_schema": LANGUAGE_SCHEMA},
+            temperature=0,
+            max_tokens=10,
+        )
+        return json.loads(response.choices[0].message.content or "{}").get("language")
 
     async def warm_up(self) -> None:
         """Make the requested small startup call through the reusable client."""

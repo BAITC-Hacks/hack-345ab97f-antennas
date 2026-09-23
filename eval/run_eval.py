@@ -61,7 +61,8 @@ async def main(limit: int | None = None) -> None:
             state_data["last_bot_question"] = state_data.pop("last_assistant_message")
         expected_label = row.get("expected") or row.get("expected_decision")
         try:
-            result = await router.route(DialogState(**state_data), Utterance(text=row["text"], lang=row.get("lang")))
+            # No lang hint: the label is the answer we measure, and real STT never says "mixed".
+            result = await router.route(DialogState(**state_data), Utterance(text=row["text"]))
         except Exception as error:  # a broken answer is a router miss, not a crash of the whole run
             print(f"✗ {row['id']:4} ERROR {type(error).__name__}: {str(error)[:200]}")
             results.append({"id": row["id"], "type": row.get("type"), "lang": row.get("lang"),
@@ -80,7 +81,9 @@ async def main(limit: int | None = None) -> None:
               f"got {str(actual):24} [{result.final_action}, conf {result.confidence:.2f}, margin {result.margin:.2f}] "
               f"{result.timings_ms['full']:5.0f} ms")
         if not ok: print(f"        reason: {result.decision.reason}")
-        results.append({"id": row["id"], "type": row.get("type"), "lang": row.get("lang"),
+        language_ok = result.decision.language == row.get("lang")
+        if not language_ok: print(f"        language: expected {row.get('lang')}, got {result.decision.language}")
+        results.append({"id": row["id"], "type": row.get("type"), "lang": row.get("lang"), "language_correct": language_ok,
                         "correct": ok, "scenario_correct": scenario_ok, **result.model_dump(mode="json")})
     by_type = accuracy_by(results, "type")
     by_language = accuracy_by(results, "lang")
@@ -88,6 +91,7 @@ async def main(limit: int | None = None) -> None:
         "created_at": datetime.now(timezone.utc).isoformat(), "dataset": "tune", "model": router.provider.model,
         "accuracy": sum(r["correct"] for r in results) / len(results),
         "scenario_accuracy": sum(r["scenario_correct"] for r in results) / len(results),
+        "language_detection": sum(r.get("language_correct", False) for r in results) / len(results),
         "multi_intent_found": f"{multi_found}/{multi_total}",
         "latency_p50_ms": percentile(latencies, .5), "latency_p95_ms": percentile(latencies, .95),
         "commit_p50_ms": percentile(commits, .5),
@@ -99,7 +103,7 @@ async def main(limit: int | None = None) -> None:
     target = ROOT / f"eval/reports/tune-{stamp}-{router.provider.model.replace('/', '-')}.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    summary = ("accuracy", "scenario_accuracy", "accuracy_by_type", "accuracy_by_language", "multi_intent_found",
+    summary = ("accuracy", "scenario_accuracy", "language_detection", "accuracy_by_type", "accuracy_by_language", "multi_intent_found",
                "latency_p50_ms", "latency_p95_ms", "commit_p50_ms", "top_confusions")
     print("\n" + json.dumps({key: report[key] for key in summary}, ensure_ascii=False, indent=2))
     print(f"report: {target.relative_to(ROOT)}")
