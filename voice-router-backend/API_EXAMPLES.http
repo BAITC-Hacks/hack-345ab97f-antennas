@@ -1,0 +1,20 @@
+### Health
+GET http://127.0.0.1:8000/api/health
+
+### Catalog
+GET http://127.0.0.1:8000/api/catalog
+
+### Text routing (stateless)
+POST http://127.0.0.1:8000/api/route
+Content-Type: application/json
+
+{"text":"Не могу оплатить полис"}
+
+### Actual metrics for the active mode
+GET http://127.0.0.1:8000/api/supervisor
+
+### Trace history
+GET http://127.0.0.1:8000/api/traces?limit=10
+
+### Local operator queue
+GET http://127.0.0.1:8000/api/handoffs

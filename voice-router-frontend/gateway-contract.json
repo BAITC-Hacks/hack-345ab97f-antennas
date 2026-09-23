@@ -1,0 +1,513 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Voice Router browser gateway contract",
+  "description": "The backend, not the browser, owns LLM routing and trace persistence.",
+  "client_to_server": {
+    "text_input": {
+      "required": [
+        "type",
+        "text",
+        "client_ts"
+      ],
+      "properties": {
+        "type": {
+          "const": "text_input"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "client_ts": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "speech_end": {
+      "required": [
+        "type",
+        "client_ts"
+      ],
+      "properties": {
+        "type": {
+          "const": "speech_end"
+        },
+        "client_ts": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "audio_chunk": {
+      "required": [
+        "type",
+        "pcm16",
+        "sample_rate_hz"
+      ],
+      "properties": {
+        "type": {
+          "const": "audio_chunk"
+        },
+        "pcm16": {
+          "type": "string",
+          "description": "base64 PCM16 little-endian"
+        },
+        "sample_rate_hz": {
+          "const": 16000
+        }
+      },
+      "type": "object"
+    },
+    "catalog_upsert": {
+      "type": "object",
+      "required": [
+        "type",
+        "scenario"
+      ],
+      "properties": {
+        "type": {
+          "const": "catalog_upsert"
+        },
+        "scenario": {
+          "type": "object",
+          "required": [
+            "id",
+            "title",
+            "purpose",
+            "boundary",
+            "ru",
+            "kk"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]{2,63}$"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "purpose": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "boundary": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "ru": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "kk": {
+              "type": "string",
+              "maxLength": 4000
+            }
+          }
+        }
+      }
+    },
+    "catalog_get": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "catalog_get"
+        }
+      }
+    },
+    "catalog_delete": {
+      "type": "object",
+      "required": [
+        "type",
+        "scenario_id"
+      ],
+      "properties": {
+        "type": {
+          "const": "catalog_delete"
+        },
+        "scenario_id": {
+          "type": "string"
+        }
+      }
+    },
+    "supervisor_get": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "supervisor_get"
+        }
+      }
+    },
+    "handoff_list": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "handoff_list"
+        }
+      }
+    }
+  },
+  "server_to_client": {
+    "transcript": {
+      "required": [
+        "type",
+        "text",
+        "lang",
+        "is_final"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "transcript"
+        },
+        "text": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "is_final": {
+          "type": "boolean"
+        }
+      }
+    },
+    "route_decision": {
+      "required": [
+        "type",
+        "scenario_id",
+        "decision",
+        "confidence",
+        "alternatives",
+        "reason",
+        "path"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "route_decision"
+        },
+        "scenario_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "route",
+            "clarify",
+            "handoff"
+          ]
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "alternatives": {
+          "type": "array"
+        },
+        "additional_intents": {
+          "type": "array"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      }
+    },
+    "response_text": {
+      "required": [
+        "type",
+        "text"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "response_text"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "trace": {
+      "required": [
+        "type",
+        "turn_id",
+        "timings_ms"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "trace"
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "timings_ms": {
+          "type": "object",
+          "properties": {
+            "endpoint": {
+              "type": "number",
+              "minimum": 0
+            },
+            "stt": {
+              "type": "number",
+              "minimum": 0
+            },
+            "route": {
+              "type": "number",
+              "minimum": 0
+            },
+            "exec": {
+              "type": "number",
+              "minimum": 0
+            },
+            "first_audio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "total": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "tts_audio": {
+      "required": [
+        "type",
+        "chunk"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "tts_audio"
+        },
+        "mime_type": {
+          "enum": [
+            "audio/mpeg",
+            "audio/wav"
+          ]
+        },
+        "chunk": {
+          "type": "string"
+        },
+        "is_final": {
+          "type": "boolean"
+        },
+        "ai_generated": {
+          "type": "boolean"
+        }
+      }
+    },
+    "catalog_updated": {
+      "required": [
+        "type",
+        "scenario_id"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "catalog_updated"
+        },
+        "scenario_id": {
+          "type": "string"
+        }
+      }
+    },
+    "session_open": {
+      "type": "object",
+      "required": [
+        "type",
+        "session_id",
+        "mode",
+        "voice_enabled",
+        "capabilities"
+      ],
+      "properties": {
+        "type": {
+          "const": "session_open"
+        }
+      }
+    },
+    "turn_started": {
+      "type": "object",
+      "required": [
+        "type",
+        "turn_id",
+        "mode"
+      ],
+      "properties": {
+        "type": {
+          "const": "turn_started"
+        }
+      }
+    },
+    "catalog_snapshot": {
+      "type": "object",
+      "required": [
+        "type",
+        "version",
+        "scenarios"
+      ],
+      "properties": {
+        "type": {
+          "const": "catalog_snapshot"
+        }
+      }
+    },
+    "catalog_deleted": {
+      "type": "object",
+      "required": [
+        "type",
+        "scenario_id",
+        "version"
+      ],
+      "properties": {
+        "type": {
+          "const": "catalog_deleted"
+        }
+      }
+    },
+    "supervisor_stats": {
+      "type": "object",
+      "required": [
+        "type",
+        "sample_size",
+        "mode"
+      ],
+      "properties": {
+        "type": {
+          "const": "supervisor_stats"
+        }
+      }
+    },
+    "handoff_snapshot": {
+      "type": "object",
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "handoff_snapshot"
+        }
+      }
+    },
+    "trace_history": {
+      "type": "object",
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "trace_history"
+        }
+      }
+    },
+    "transport_error": {
+      "type": "object",
+      "required": [
+        "type",
+        "message"
+      ],
+      "properties": {
+        "type": {
+          "const": "transport_error"
+        }
+      }
+    }
+  },
+  "$comment": "Implemented by ../voice-router-backend. Sequential turns, matching turn_id. Full MP3 per tts_audio (not chunked playback). Optional extensions preserve compatibility with older Gateways.",
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/client_to_server/text_input"
+    },
+    {
+      "$ref": "#/client_to_server/speech_end"
+    },
+    {
+      "$ref": "#/client_to_server/audio_chunk"
+    },
+    {
+      "$ref": "#/client_to_server/catalog_upsert"
+    },
+    {
+      "$ref": "#/client_to_server/catalog_get"
+    },
+    {
+      "$ref": "#/client_to_server/catalog_delete"
+    },
+    {
+      "$ref": "#/client_to_server/supervisor_get"
+    },
+    {
+      "$ref": "#/client_to_server/handoff_list"
+    },
+    {
+      "$ref": "#/server_to_client/transcript"
+    },
+    {
+      "$ref": "#/server_to_client/route_decision"
+    },
+    {
+      "$ref": "#/server_to_client/response_text"
+    },
+    {
+      "$ref": "#/server_to_client/trace"
+    },
+    {
+      "$ref": "#/server_to_client/tts_audio"
+    },
+    {
+      "$ref": "#/server_to_client/catalog_updated"
+    },
+    {
+      "$ref": "#/server_to_client/session_open"
+    },
+    {
+      "$ref": "#/server_to_client/turn_started"
+    },
+    {
+      "$ref": "#/server_to_client/catalog_snapshot"
+    },
+    {
+      "$ref": "#/server_to_client/catalog_deleted"
+    },
+    {
+      "$ref": "#/server_to_client/supervisor_stats"
+    },
+    {
+      "$ref": "#/server_to_client/handoff_snapshot"
+    },
+    {
+      "$ref": "#/server_to_client/trace_history"
+    },
+    {
+      "$ref": "#/server_to_client/transport_error"
+    }
+  ]
+}
