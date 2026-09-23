@@ -1,0 +1,13 @@
+{
+  "name": "tynda-voice-router-frontend",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check app.js && node --check gateway.js && node --check server.mjs",
+    "demo": "node server.mjs",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,115 @@
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071624" />
+    <title>Tyńda · Voice Router</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Навигация">
+        <a class="brand" href="#call" aria-label="Tyńda">
+          <span class="brand-mark">T</span><span>tyńda</span>
+        </a>
+        <p class="brand-caption">Voice Router</p>
+        <nav class="nav">
+          <a class="nav-link active" data-page="call" href="#call"><span>◉</span> Звонок</a>
+          <a class="nav-link" data-page="trace" href="#trace"><span>⌁</span> Трассировка</a>
+          <a class="nav-link" data-page="supervisor" href="#supervisor"><span>▦</span> Супервизор</a>
+          <a class="nav-link" data-page="catalog" href="#catalog"><span>◇</span> Каталог</a>
+        </nav>
+        <div class="sidebar-footer">
+          <span class="status-dot"></span> Демо-режим
+          <small>Локальное демо / внешний Gateway</small>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div id="page-kicker">Клиентский интерфейс</div>
+          <div class="topbar-right"><span id="gateway-status" class="pill live"><i></i> demo gateway</span><button id="gateway-mode" class="quiet-button" title="Подключение задаётся параметром ?gateway=ws://...">Интеграция</button><button id="reset-demo" class="quiet-button">Сбросить демо</button></div>
+        </header>
+
+        <section id="call" class="page active" data-kicker="Клиентский интерфейс">
+          <div class="call-layout">
+            <div class="call-stage">
+              <span class="eyebrow">СТРАХОВОЙ ГОЛОСОВОЙ ПОМОЩНИК</span>
+              <h1>Здравствуйте, я <em>Tyńda.</em><br />Чем помочь?</h1>
+              <p class="lead">Скажите вопрос по-русски, қазақша или вперемешку. В демо можно выбрать готовую реплику.</p>
+              <div id="voice-orb" class="voice-orb" aria-label="Микрофон выключен"><span></span><span></span><span></span><span></span><span></span></div>
+              <button id="call-button" class="call-button"><span class="mic-icon">●</span> Начать звонок</button>
+              <p id="call-state" class="call-state">Микрофон выключен · текстовый канал доступен</p>
+              <form id="text-input-form" class="text-input-form">
+                <label for="text-input">Резервный текстовый ввод</label>
+                <div><input id="text-input" maxlength="600" autocomplete="off" placeholder="Введите реплику клиента, если микрофон недоступен" /><button type="submit">Отправить</button></div>
+              </form>
+            </div>
+            <aside class="turn-card">
+              <div class="card-heading"><span>Текущий поворот</span><span id="turn-id">#042</span></div>
+              <div class="turn-line client"><span class="avatar">К</span><p id="client-text">Выберите фразу ниже, чтобы начать.</p></div>
+              <div class="turn-line bot"><span class="avatar bot-avatar">T</span><p id="bot-text">Я покажу маршрут, альтернативы и задержку каждого этапа.</p></div>
+              <div class="route-summary"><span class="route-label">Маршрут</span><strong id="route-name">ожидание ввода</strong><span id="route-confidence" class="confidence">—</span></div>
+            </aside>
+          </div>
+          <div class="prompt-strip">
+            <span>Демо-реплики</span>
+            <button class="prompt" data-demo="payment">Я вчера оплатил, деньги списались, а заказ не подтвердился. И адрес надо поменять.</button>
+            <button class="prompt" data-demo="kazakh">Төлемім неге өтпей қалды?</button>
+            <button class="prompt" data-demo="mixed">Полисімді продлить керек, бірақ бағасын да айтыңызшы.</button>
+            <button class="prompt" data-demo="ambiguous">Хочу отменить операцию.</button>
+          </div>
+        </section>
+
+        <section id="trace" class="page" data-kicker="Решение по последней реплике">
+          <div class="page-title-row"><div><span class="eyebrow">OBSERVABILITY</span><h2>Трассировка решения</h2><p id="trace-subtitle">#042 · ожидает реплику клиента</p></div><button class="outline-button" id="replay-trace">Повторить анимацию</button></div>
+          <div class="trace-main-grid">
+            <article class="trace-card waterfall-card">
+              <div class="card-heading"><span>Этапы последовательно · ms</span><strong id="trace-total">—</strong></div>
+              <div id="waterfall" class="waterfall empty"><p>Выберите демо-реплику на экране звонка.</p></div>
+              <div class="waterfall-axis"><span>0 ms</span><span>250</span><span>500</span><span>750</span><span>1000</span></div>
+            </article>
+            <article class="trace-card decision-card">
+              <div class="card-heading"><span>LLM structured output</span><span id="decision-path" class="pill">—</span></div>
+              <pre id="json-output">{ "scenario_id": null }</pre>
+            </article>
+          </div>
+          <div class="trace-bottom-grid">
+            <article class="trace-card"><span class="metric-label">Распознанный текст</span><p id="trace-transcript" class="quote">—</p><span id="trace-language" class="language-chip">—</span></article>
+            <article class="trace-card"><span class="metric-label">Почему выбран сценарий</span><p id="trace-reason">—</p></article>
+            <article class="trace-card"><span class="metric-label">Следующая тема</span><p id="additional-intent">—</p></article>
+          </div>
+          <article class="trace-card trace-events"><div class="card-heading"><span>События поворота</span><span id="trace-turn-status" class="muted">ожидание</span></div><ol id="trace-events" class="event-list"><li>Gateway ждёт новую реплику клиента.</li></ol></article>
+        </section>
+
+        <section id="supervisor" class="page" data-kicker="Операционный обзор">
+          <div class="page-title-row"><div><span class="eyebrow">SUPERVISOR</span><h2>Панель супервизора</h2><p>Синтетические данные за последние 24 часа</p></div><button id="export-csv" class="outline-button">Экспорт CSV</button></div>
+          <div class="metrics-grid">
+            <article class="metric-card"><span>Top-1 accuracy</span><strong id="accuracy-value">92.4%</strong><small class="positive">демо-значение, замените eval</small></article>
+            <article class="metric-card"><span>Routing p50</span><strong id="latency-value">384 <i>ms</i></strong><small>цель: ≤ 500 ms</small></article>
+            <article class="metric-card"><span>Clarify rate</span><strong id="clarify-value">4.1%</strong><small>на простых фразах</small></article>
+            <article class="metric-card"><span>Передано оператору</span><strong id="handoff-value">7.3%</strong><small>демо-значение, замените trace store</small></article>
+          </div>
+          <div class="supervisor-grid">
+            <article class="trace-card trend-card"><div class="card-heading"><span>Точность по срезам</span><span class="muted">пример срезов · не eval</span></div><div class="bar-chart"><div><span>ru</span><i><b style="width:95%"></b></i><strong>95%</strong></div><div><span>kk</span><i><b style="width:88%"></b></i><strong>88%</strong></div><div><span>mixed</span><i><b style="width:90%"></b></i><strong>90%</strong></div><div><span>topic switch</span><i><b style="width:86%"></b></i><strong>86%</strong></div></div></article>
+            <article class="trace-card"><div class="card-heading"><span>Последние маршруты</span><button id="all-routes" class="text-button">Все</button></div><table class="routes-table"><thead><tr><th>Время</th><th>Сценарий</th><th>Решение</th><th>ms</th></tr></thead><tbody id="recent-routes"></tbody></table></article>
+          </div>
+          <article class="trace-card handoff-card"><div><span class="eyebrow">Демо-карточка</span><h3>Операторская карточка</h3><p>Клиент дважды не подтвердил намерение. Передаём историю, распознанный язык и топ-2 маршрута.</p></div><div class="handoff-data"><span>Контекст</span><strong>refund_request · policy_renewal</strong><button id="handoff-queue" class="call-button small">Открыть очередь</button></div></article>
+        </section>
+
+        <section id="catalog" class="page" data-kicker="Сценарии без переобучения">
+          <div class="page-title-row"><div><span class="eyebrow">CATALOG</span><h2>Редактор сценариев</h2><p>Локальный каталог; публикация на сервер — после подтверждения Gateway.</p></div><button id="new-scenario" class="call-button small">+ Новый сценарий</button></div>
+          <div class="catalog-layout">
+            <article class="trace-card catalog-list"><div class="search"><span>⌕</span><input id="catalog-search" aria-label="Найти сценарий" placeholder="Найти сценарий" /></div><div id="scenario-list"></div></article>
+            <article class="trace-card editor"><form id="scenario-form"><div class="form-title"><div><span class="metric-label">ВЫБРАННЫЙ СЦЕНАРИЙ</span><h3 id="editor-title">Проблема с подтверждением оплаты</h3></div><span id="save-state" class="pill">сохранено</span></div><label>ID сценария<input id="scenario-id" value="payment_not_confirmed" required /></label><label>Назначение<textarea id="scenario-purpose" maxlength="4000" required>Деньги списались, но заказ или полис не подтвердился.</textarea></label><label>Граница с соседним сценарием<textarea id="scenario-boundary" maxlength="4000" required>Не выбирать, если клиент просит вернуть деньги: тогда refund_request.</textarea></label><div class="form-row"><label>Пример на русском<input id="example-ru" maxlength="4000" value="Деньги списали, а заказ не появился" /></label><label>Мысал қазақша<input id="example-kk" maxlength="4000" value="Төлем жасадым, бірақ расталмады" /></label></div><div class="editor-actions"><button type="button" id="delete-scenario" class="quiet-button danger">Удалить</button><button type="submit" class="call-button small">Сохранить сценарий</button></div></form></article>
+          </div>
+          <p class="catalog-note">Демо показывает принцип: сценарий хранится как текст каталога. Модель выбирает его по описанию и контексту, без обучения классификатора.</p>
+        </section>
+      </main>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

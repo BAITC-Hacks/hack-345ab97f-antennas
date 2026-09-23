@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Voice Router browser gateway contract",
+  "description": "The backend, not the browser, owns LLM routing and trace persistence.",
+  "client_to_server": {
+    "text_input": {
+      "required": [
+        "type",
+        "text",
+        "client_ts"
+      ],
+      "properties": {
+        "type": {
+          "const": "text_input"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "client_ts": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "speech_end": {
+      "required": [
+        "type",
+        "client_ts"
+      ],
+      "properties": {
+        "type": {
+          "const": "speech_end"
+        },
+        "client_ts": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "audio_chunk": {
+      "required": [
+        "type",
+        "pcm16",
+        "sample_rate_hz"
+      ],
+      "properties": {
+        "type": {
+          "const": "audio_chunk"
+        },
+        "pcm16": {
+          "type": "string",
+          "description": "base64 PCM16 little-endian"
+        },
+        "sample_rate_hz": {
+          "const": 16000
+        }
+      },
+      "type": "object"
+    },
+    "catalog_upsert": {
+      "type": "object",
+      "required": [
+        "type",
+        "scenario"
+      ],
+      "properties": {
+        "type": {
+          "const": "catalog_upsert"
+        },
+        "scenario": {
+          "type": "object",
+          "required": [
+            "id",
+            "title",
+            "purpose",
+            "boundary",
+            "ru",
+            "kk"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]{2,63}$"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "purpose": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "boundary": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "ru": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "kk": {
+              "type": "string",
+              "maxLength": 4000
+            }
+          }
+        }
+      }
+    }
+  },
+  "server_to_client": {
+    "transcript": {
+      "required": [
+        "type",
+        "text",
+        "lang",
+        "is_final"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "transcript"
+        },
+        "text": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "is_final": {
+          "type": "boolean"
+        }
+      }
+    },
+    "route_decision": {
+      "required": [
+        "type",
+        "scenario_id",
+        "decision",
+        "confidence",
+        "alternatives",
+        "reason",
+        "path"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "route_decision"
+        },
+        "scenario_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "route",
+            "clarify",
+            "handoff"
+          ]
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "alternatives": {
+          "type": "array"
+        },
+        "additional_intents": {
+          "type": "array"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      }
+    },
+    "response_text": {
+      "required": [
+        "type",
+        "text"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "response_text"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "trace": {
+      "required": [
+        "type",
+        "turn_id",
+        "timings_ms"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "trace"
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "timings_ms": {
+          "type": "object",
+          "properties": {
+            "endpoint": {
+              "type": "number",
+              "minimum": 0
+            },
+            "stt": {
+              "type": "number",
+              "minimum": 0
+            },
+            "route": {
+              "type": "number",
+              "minimum": 0
+            },
+            "exec": {
+              "type": "number",
+              "minimum": 0
+            },
+            "first_audio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "total": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "tts_audio": {
+      "required": [
+        "type",
+        "chunk"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "tts_audio"
+        }
+      }
+    },
+    "catalog_updated": {
+      "required": [
+        "type",
+        "scenario_id"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "catalog_updated"
+        },
+        "scenario_id": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$comment": "Integration proposal. Sequential turns: transcript, route_decision, response_text, trace. tts_audio is logged only. Catalog deletion remains local.",
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/client_to_server/text_input"
+    },
+    {
+      "$ref": "#/client_to_server/speech_end"
+    },
+    {
+      "$ref": "#/client_to_server/audio_chunk"
+    },
+    {
+      "$ref": "#/client_to_server/catalog_upsert"
+    },
+    {
+      "$ref": "#/server_to_client/transcript"
+    },
+    {
+      "$ref": "#/server_to_client/route_decision"
+    },
+    {
+      "$ref": "#/server_to_client/response_text"
+    },
+    {
+      "$ref": "#/server_to_client/trace"
+    },
+    {
+      "$ref": "#/server_to_client/tts_audio"
+    },
+    {
+      "$ref": "#/server_to_client/catalog_updated"
+    }
+  ]
+}
