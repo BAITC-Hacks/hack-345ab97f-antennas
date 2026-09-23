@@ -1,13 +1,16 @@
-.PHONY: test eval eval-quick leakage
+.PHONY: test eval eval-quick eval-3 leakage
 
 test:
-	PYTHONPATH=backend pytest backend/tests -q
+	PYTHONPATH=backend python -m pytest backend/tests eval/tests -q
 
 eval:
-	PYTHONPATH=backend python eval/run_eval.py
+	python eval/run_eval.py
 
 eval-quick:
-	PYTHONPATH=backend python eval/run_eval.py --limit 30
+	python eval/run_eval.py --limit 30
+
+eval-3:
+	python eval/run_eval.py --runs 3
 
 leakage:
 	PYTHONPATH=backend python eval/check_leakage.py

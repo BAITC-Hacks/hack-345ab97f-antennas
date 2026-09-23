@@ -1,0 +1,977 @@
+{
+  "dataset": "tune",
+  "model": "gpt-4.1-mini",
+  "run_count": 1,
+  "source_sha256": {
+    "eval/datasets/tune.json": "acc26e7fa0b46cce908a6bc7570b24a7b281374593865fafece2d53cd4e4f46f",
+    "eval/metrics.py": "f3654ff8b523971e0c37665720f2c2f7259c3e3d3d4e873f6c58363df328d742",
+    "eval/run_eval.py": "36d70a431d6362fce2169d44a9191d10c7bd28cb55699d2a08fcd3372d829fe2",
+    "data/scenarios.json": "dee6562722e224f9f86128a9977efd70bc861b67dd6fd5cf1230c34d5625d457",
+    "backend/app/router/__init__.py": "56e84e1b8b99c7e537dd720e6ed52124e0f53f9b1e49b7d963f86709470a279f",
+    "backend/app/router/catalog.py": "b0f088e540ad364fce4c48250696b9174f1852ad13bc84ffd75c4de6d6053f07",
+    "backend/app/router/cli.py": "7f7291b6f7316e454fd350dfe51c867a36e6bfe9349e311f9444911afee35531",
+    "backend/app/router/confidence.py": "aabae6e88f09ded5c69ff6802e7e889cb1f87c15fcd13de3acc13bb41bdc684c",
+    "backend/app/router/llm_router.py": "e1cca3db91a1a52242d2eca9176ccd2673f630d7ded7a2c9dfb6e69dd117a99a",
+    "backend/app/router/policy.py": "cb608a916c6d3d3df94d7dc6f53a459e3657c010380efd18aa1ca7026da01681",
+    "backend/app/router/prompt.py": "b13496d1a754a1428e122bc64934afc38152356e5d59690d6601521f98b6cd27",
+    "backend/app/router/providers/__init__.py": "6135ebddd088e13dd97f295a7d53c0b0edf70b83cb854a359f59467e4984ed91",
+    "backend/app/router/providers/base.py": "39da62ece22f3840aa50f4ae942cdbd8c4dd2794d18f31fe2cc7b7689d6fd2f4",
+    "backend/app/router/providers/fake.py": "53d7a1d43a8e422fe05f103d7ee84c88a351773e1e762adad67cd64d11c127b5",
+    "backend/app/router/providers/openai_provider.py": "f259b19493fbc6dc54c14f20beb7d55ff371e2248e9fd5b646dc06b9e9ada8bc",
+    "backend/app/router/schema.py": "a6f7db34d834702436cea293989d028819b0124ca8c2d96dacdc1d54c6717375"
+  },
+  "overall": {
+    "top1": {
+      "runs": [
+        1.0
+      ],
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 16,
+      "total": 16
+    },
+    "decision": {
+      "runs": [
+        1.0
+      ],
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 16,
+      "total": 16
+    },
+    "action": {
+      "runs": [
+        1.0
+      ],
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 16,
+      "total": 16
+    },
+    "topic_switch": {
+      "runs": [
+        null
+      ],
+      "mean": null,
+      "min": null,
+      "max": null,
+      "range_pp": null,
+      "stddev_pp": null,
+      "correct": 0,
+      "total": 0
+    },
+    "joint": {
+      "runs": [
+        1.0
+      ],
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 16,
+      "total": 16
+    },
+    "additional_intents": {
+      "runs": [
+        1.0
+      ],
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 1,
+      "total": 1
+    },
+    "language": {
+      "runs": [
+        1.0
+      ],
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 16,
+      "total": 16
+    }
+  },
+  "by_type": {
+    "boundary": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "additional_intents": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      }
+    },
+    "clarify": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "additional_intents": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    "handoff": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "additional_intents": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    "mixed": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "additional_intents": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      }
+    },
+    "multi": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "additional_intents": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    "simple": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 4,
+        "total": 4
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 4,
+        "total": 4
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 4,
+        "total": 4
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 4,
+        "total": 4
+      },
+      "additional_intents": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 4,
+        "total": 4
+      }
+    },
+    "topic_switch": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "additional_intents": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      }
+    }
+  },
+  "by_lang": {
+    "kk": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 2,
+        "total": 2
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 2,
+        "total": 2
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 2,
+        "total": 2
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 2,
+        "total": 2
+      },
+      "additional_intents": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 2,
+        "total": 2
+      }
+    },
+    "mixed": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "additional_intents": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      }
+    },
+    "ru": {
+      "top1": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 11,
+        "total": 11
+      },
+      "decision": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 11,
+        "total": 11
+      },
+      "action": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 11,
+        "total": 11
+      },
+      "topic_switch": {
+        "runs": [
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 11,
+        "total": 11
+      },
+      "additional_intents": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 1,
+        "total": 1
+      },
+      "language": {
+        "runs": [
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 11,
+        "total": 11
+      }
+    }
+  },
+  "unstable_cases": [],
+  "reports": [
+    "tune-2026-09-23_122228_403242Z-run1.json"
+  ]
+}

@@ -1,0 +1,1026 @@
+{
+  "dataset": "tune",
+  "model": "gpt-4.1-mini",
+  "run_count": 3,
+  "source_sha256": {
+    "eval/datasets/tune.json": "acc26e7fa0b46cce908a6bc7570b24a7b281374593865fafece2d53cd4e4f46f",
+    "eval/metrics.py": "62957ebc5f18f14d17577b1be6bd7a4fa914af007f63d8f6a17566a5a4a30d62",
+    "eval/run_eval.py": "a3acf14aec63313b2c4ca633fcb75b89d35f8a272f54c6ca6b8fc742fa34c98d",
+    "data/scenarios.json": "dee6562722e224f9f86128a9977efd70bc861b67dd6fd5cf1230c34d5625d457",
+    "backend/app/router/__init__.py": "56e84e1b8b99c7e537dd720e6ed52124e0f53f9b1e49b7d963f86709470a279f",
+    "backend/app/router/catalog.py": "b0f088e540ad364fce4c48250696b9174f1852ad13bc84ffd75c4de6d6053f07",
+    "backend/app/router/cli.py": "7f7291b6f7316e454fd350dfe51c867a36e6bfe9349e311f9444911afee35531",
+    "backend/app/router/confidence.py": "386be6175fcce199812c466887f7eee8f44a3631740a732fe17b9629722dae3e",
+    "backend/app/router/llm_router.py": "b98adadef580169da74055eed2aa65e2bab040e1c8a7044086016487236edce4",
+    "backend/app/router/policy.py": "cb608a916c6d3d3df94d7dc6f53a459e3657c010380efd18aa1ca7026da01681",
+    "backend/app/router/prompt.py": "6cda46b9b69cac8b35aac9c8785e18b66e43828847adde39f4f0c7071886eb6e",
+    "backend/app/router/providers/__init__.py": "ccf01856115f92eb94c125dfb620cba07ad31c38b3c3cdffdca54e12d4d508f7",
+    "backend/app/router/providers/base.py": "a33be89b46ed38c9c819dfde7faf69b3438c22fad11cd700550108e728deccde",
+    "backend/app/router/providers/fake.py": "53d7a1d43a8e422fe05f103d7ee84c88a351773e1e762adad67cd64d11c127b5",
+    "backend/app/router/providers/openai_provider.py": "7fd05b95568a05e193ffbdc256f666bd74719e699e349297bce1f8ae2ceca427",
+    "backend/app/router/schema.py": "a6f7db34d834702436cea293989d028819b0124ca8c2d96dacdc1d54c6717375"
+  },
+  "overall": {
+    "top1": {
+      "runs": [
+        0.875,
+        0.875,
+        0.875
+      ],
+      "mean": 0.875,
+      "min": 0.875,
+      "max": 0.875,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 42,
+      "total": 48
+    },
+    "decision": {
+      "runs": [
+        0.8125,
+        0.8125,
+        0.875
+      ],
+      "mean": 0.8333333333333334,
+      "min": 0.8125,
+      "max": 0.875,
+      "range_pp": 6.25,
+      "stddev_pp": 2.946278254943948,
+      "correct": 40,
+      "total": 48
+    },
+    "action": {
+      "runs": [
+        0.8125,
+        0.8125,
+        0.875
+      ],
+      "mean": 0.8333333333333334,
+      "min": 0.8125,
+      "max": 0.875,
+      "range_pp": 6.25,
+      "stddev_pp": 2.946278254943948,
+      "correct": 40,
+      "total": 48
+    },
+    "topic_switch": {
+      "runs": [
+        null,
+        null,
+        null
+      ],
+      "mean": null,
+      "min": null,
+      "max": null,
+      "range_pp": null,
+      "stddev_pp": null,
+      "correct": 0,
+      "total": 0
+    },
+    "joint": {
+      "runs": [
+        0.8125,
+        0.8125,
+        0.8125
+      ],
+      "mean": 0.8125,
+      "min": 0.8125,
+      "max": 0.8125,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 39,
+      "total": 48
+    },
+    "additional_intents": {
+      "runs": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "range_pp": 0.0,
+      "stddev_pp": 0.0,
+      "correct": 3,
+      "total": 3
+    }
+  },
+  "by_type": {
+    "boundary": {
+      "top1": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "decision": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "action": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "additional_intents": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      }
+    },
+    "clarify": {
+      "top1": {
+        "runs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 0,
+        "total": 3
+      },
+      "decision": {
+        "runs": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mean": 0.3333333333333333,
+        "min": 0.0,
+        "max": 1.0,
+        "range_pp": 100.0,
+        "stddev_pp": 47.14045207910317,
+        "correct": 1,
+        "total": 3
+      },
+      "action": {
+        "runs": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mean": 0.3333333333333333,
+        "min": 0.0,
+        "max": 1.0,
+        "range_pp": 100.0,
+        "stddev_pp": 47.14045207910317,
+        "correct": 1,
+        "total": 3
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 0,
+        "total": 3
+      },
+      "additional_intents": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      }
+    },
+    "handoff": {
+      "top1": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "decision": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "action": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "additional_intents": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      }
+    },
+    "mixed": {
+      "top1": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "decision": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "action": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "additional_intents": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      }
+    },
+    "multi": {
+      "top1": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "decision": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "action": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      },
+      "additional_intents": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      }
+    },
+    "simple": {
+      "top1": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 12,
+        "total": 12
+      },
+      "decision": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 12,
+        "total": 12
+      },
+      "action": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 12,
+        "total": 12
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 12,
+        "total": 12
+      },
+      "additional_intents": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      }
+    },
+    "topic_switch": {
+      "top1": {
+        "runs": [
+          0.6666666666666666,
+          0.6666666666666666,
+          0.6666666666666666
+        ],
+        "mean": 0.6666666666666666,
+        "min": 0.6666666666666666,
+        "max": 0.6666666666666666,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 6,
+        "total": 9
+      },
+      "decision": {
+        "runs": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "mean": 0.3333333333333333,
+        "min": 0.3333333333333333,
+        "max": 0.3333333333333333,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 9
+      },
+      "action": {
+        "runs": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "mean": 0.3333333333333333,
+        "min": 0.3333333333333333,
+        "max": 0.3333333333333333,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 9
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "mean": 0.3333333333333333,
+        "min": 0.3333333333333333,
+        "max": 0.3333333333333333,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 9
+      },
+      "additional_intents": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      }
+    }
+  },
+  "by_lang": {
+    "kk": {
+      "top1": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 6,
+        "total": 6
+      },
+      "decision": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 6,
+        "total": 6
+      },
+      "action": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 6,
+        "total": 6
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 6,
+        "total": 6
+      },
+      "additional_intents": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      }
+    },
+    "mixed": {
+      "top1": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "decision": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "action": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 9,
+        "total": 9
+      },
+      "additional_intents": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      }
+    },
+    "ru": {
+      "top1": {
+        "runs": [
+          0.8181818181818182,
+          0.8181818181818182,
+          0.8181818181818182
+        ],
+        "mean": 0.8181818181818182,
+        "min": 0.8181818181818182,
+        "max": 0.8181818181818182,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 27,
+        "total": 33
+      },
+      "decision": {
+        "runs": [
+          0.7272727272727273,
+          0.7272727272727273,
+          0.8181818181818182
+        ],
+        "mean": 0.7575757575757576,
+        "min": 0.7272727272727273,
+        "max": 0.8181818181818182,
+        "range_pp": 9.090909090909093,
+        "stddev_pp": 4.285495643554834,
+        "correct": 25,
+        "total": 33
+      },
+      "action": {
+        "runs": [
+          0.7272727272727273,
+          0.7272727272727273,
+          0.8181818181818182
+        ],
+        "mean": 0.7575757575757576,
+        "min": 0.7272727272727273,
+        "max": 0.8181818181818182,
+        "range_pp": 9.090909090909093,
+        "stddev_pp": 4.285495643554834,
+        "correct": 25,
+        "total": 33
+      },
+      "topic_switch": {
+        "runs": [
+          null,
+          null,
+          null
+        ],
+        "mean": null,
+        "min": null,
+        "max": null,
+        "range_pp": null,
+        "stddev_pp": null,
+        "correct": 0,
+        "total": 0
+      },
+      "joint": {
+        "runs": [
+          0.7272727272727273,
+          0.7272727272727273,
+          0.7272727272727273
+        ],
+        "mean": 0.7272727272727273,
+        "min": 0.7272727272727273,
+        "max": 0.7272727272727273,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 24,
+        "total": 33
+      },
+      "additional_intents": {
+        "runs": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "range_pp": 0.0,
+        "stddev_pp": 0.0,
+        "correct": 3,
+        "total": 3
+      }
+    }
+  },
+  "unstable_cases": [
+    {
+      "id": "t23",
+      "outcomes": [
+        {
+          "scenario_id": "payment_issue",
+          "decision": "route",
+          "topic_switch": false,
+          "error_type": null
+        },
+        {
+          "scenario_id": "payment_issue",
+          "decision": "route",
+          "topic_switch": false,
+          "error_type": null
+        },
+        {
+          "scenario_id": "payment_issue",
+          "decision": "clarify",
+          "topic_switch": false,
+          "error_type": null
+        }
+      ]
+    },
+    {
+      "id": "t19",
+      "outcomes": [
+        {
+          "scenario_id": "report_claim",
+          "decision": "continue",
+          "topic_switch": true,
+          "error_type": null
+        },
+        {
+          "scenario_id": "report_claim",
+          "decision": "continue",
+          "topic_switch": false,
+          "error_type": null
+        },
+        {
+          "scenario_id": "report_claim",
+          "decision": "continue",
+          "topic_switch": false,
+          "error_type": null
+        }
+      ]
+    }
+  ],
+  "reports": [
+    "tune-2026-09-23_110623_620508Z-run1.json",
+    "tune-2026-09-23_110623_620508Z-run2.json",
+    "tune-2026-09-23_110623_620508Z-run3.json"
+  ]
+}

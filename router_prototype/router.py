@@ -73,7 +73,8 @@ class LLMRouter:
         except BadRequestError as e:
             # Не все модели умеют json_schema. Тогда один раз переключаемся на json_object
             # и дальше полагаемся на проверку через Pydantic.
-            if self.response_format == "json_schema":
+            format_error = any(name in str(e).lower() for name in ("response_format", "json_schema"))
+            if self.response_format == "json_schema" and e.status_code == 400 and format_error:
                 print(f"[router] json_schema не поддерживается ({e.__class__.__name__}), перехожу на json_object")
                 self.response_format = "json_object"
                 return self._call_llm(messages)
