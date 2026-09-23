@@ -1,4 +1,14 @@
 services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_DEMO_MODE: "false"
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+      VITE_WS_URL: ${VITE_WS_URL:-ws://localhost:8000/ws}
+    depends_on:
+      - backend
   backend:
     build: .
     ports:

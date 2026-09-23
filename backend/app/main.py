@@ -94,11 +94,11 @@ def _public_route(result: RouteResult, turn_id: str) -> dict[str, Any]:
         "reason": decision.reason,
         "topicSwitch": decision.topic_switch,
         "additionalIntents": [
-            {"scenarioId": item.scenario_id, "confidence": result.confidence}
+            {"scenarioId": item.scenario_id, "confidence": None}
             for item in decision.additional_intents
         ],
         "alternatives": [
-            {"scenarioId": item.scenario_id, "confidence": 0, "whyNot": item.why_not}
+            {"scenarioId": item.scenario_id, "confidence": None, "whyNot": item.why_not}
             for item in decision.alternatives
         ],
     }
@@ -261,7 +261,10 @@ def create_app(
         if call is None:
             raise HTTPException(status_code=404, detail="Call not found")
         if call.socket is not None:
-            await call.socket.close()
+            try:
+                await call.socket.close()
+            except RuntimeError:
+                pass
         return {"status": "ended"}
 
     @app.websocket("/ws")

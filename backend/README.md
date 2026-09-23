@@ -7,8 +7,8 @@ Python 3.11+, FastAPI, WebSocket, SQLite. Сценарий выбирает то
 ## Запуск
 
 1. Скопируйте `.env.example` в `.env` и заполните `LLM_API_KEY` и `LLM_MODEL`.
-2. `docker compose up --build` (или `pip install -r requirements.txt` и `make run`).
-3. Проверка: `http://localhost:8000/health`, документация: `http://localhost:8000/docs`.
+2. `docker compose up --build` поднимет backend и frontend (или `pip install -r requirements.txt` и `make run` для одного backend).
+3. Интерфейс: `http://localhost:5173/call`; backend: `http://localhost:8000/health`, документация API: `http://localhost:8000/docs`.
 
 Для аудио установите `STT_PROVIDER=openai` и `TTS_PROVIDER=openai`, а также `SPEECH_API_KEY`
 (если пустой, используется `LLM_API_KEY`). По умолчанию голос отключён; текстовые звонки работают.
