@@ -1,4 +1,10 @@
-.PHONY: test eval eval-quick eval-3 leakage
+.PHONY: run web test eval eval-quick eval-3 leakage
+
+run:
+	python -m uvicorn app.main:app --app-dir backend --port 8000
+
+web:
+	cd frontend && npm run dev
 
 test:
 	PYTHONPATH=backend python -m pytest backend/tests eval/tests -q

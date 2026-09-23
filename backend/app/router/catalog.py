@@ -33,7 +33,10 @@ def render_catalog(catalog: dict[str, Any]) -> str:
     for scenario in catalog["scenarios"]:
         lines = [f"### {scenario['id']} — {scenario.get('name', '')}", f"Назначение: {scenario.get('purpose', '')}"]
         for boundary in scenario.get("boundaries", []):
-            lines.append(f"Граница с {boundary['neighbor']}: {boundary['rule']}")
+            if boundary.get("neighbor"):
+                lines.append(f"Граница с {boundary['neighbor']}: {boundary['rule']}")
+            else:  # a rule added in the catalog editor without a neighbor scenario
+                lines.append(f"Граница: {boundary['rule']}")
         for language in ("ru", "kk"):
             examples = scenario.get("examples", {}).get(language, [])[:3]
             if examples:

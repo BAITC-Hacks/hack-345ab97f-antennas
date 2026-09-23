@@ -5,3 +5,5 @@ __pycache__/
 .pytest_cache/
 node_modules/
 dist/
+# server runtime: SQLite dialogs + editable catalog copy
+var/
